@@ -1,40 +1,54 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { Toaster } from 'sonner';
-import './index.css'
-import App from './App.tsx'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import Login from './pages/Login.tsx';
-import Navbar from './components/Navbar.tsx';
-import Index from './pages/Index.tsx';
-
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { Toaster } from "sonner";
+import "./index.css";
+import App from "./App.tsx";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
+import Login from "./pages/Login.tsx";
+import Navbar from "./components/Navbar.tsx";
+import Index from "./pages/Index.tsx";
+import TravelHome from "./pages/TravelHome.tsx";
+import TravelForm from "./components/travels/TravelForm.tsx";
 
 const AppLayout = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem("token");
+
+  if (!isAuthenticated) {
+    navigate("/");
+  }
   return (
     <>
       <Navbar />
       <main>
-        <Outlet /> 
+        <Outlet />
       </main>
     </>
   );
 };
 
 const router = createBrowserRouter([
+  { path: "/login", element: <Login /> },
   {
-    path : '/index',
-    element : <AppLayout/>,
-    children : [
-      {index : true, element : <Index/>}
-    ]
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Index /> },
+      { path: "/travels", element: <TravelHome /> },
+      { path: "/travel-form", element: <TravelForm /> },
+    ],
   },
- { path : '/', element : <Login/>}
+]);
 
-])
-
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Toaster />
     <RouterProvider router={router} />
   </StrictMode>,
-)
+);
