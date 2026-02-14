@@ -5,9 +5,10 @@ export interface createTravelRequest {
   travelTitle: string;
   location: string;
   purpose: string;
-  startDate: Date | string;
-  employeeIds: string[];
-  endDate: Date | string;
+  startDate: string;
+  maxPerDayAllowance: number;
+  employeeIds: number[];
+  endDate: string;
   statusId: number;
 }
 export interface travelResponse {
@@ -15,9 +16,10 @@ export interface travelResponse {
   travelTitle: string;
   location: string;
   purpose: string;
-  startDate: Date;
+  startDate: string;
+  maxPerDayAllowance: number;
   travelCreatedBy: number;
-  endDate: Date;
+  endDate: string;
   travellers: number[];
   status: Statuses;
 }

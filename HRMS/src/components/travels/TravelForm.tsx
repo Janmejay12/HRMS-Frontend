@@ -18,6 +18,7 @@ const TravelForm: React.FC = () => {
     location: "",
     purpose: "",
     startDate: "",
+    maxPerDayAllowance: 0,
     endDate: "",
     employeeIds: [],
     statusId: 1,
@@ -33,6 +34,7 @@ const TravelForm: React.FC = () => {
     const fetchEmployees = async () => {
       var fetchedEmployees = await adminApis.getAllEmployees();
       setEmployees(fetchedEmployees);
+      console.log(fetchedEmployees);
     };
 
     fetchEmployees();
@@ -42,25 +44,34 @@ const TravelForm: React.FC = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "maxPerDayAllowance" ? Number(value) : value,
+    }));
   };
 
-  const handleEmployeeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const options = e.target.options;
-    const selectedIds: number[] = [];
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].selected) {
-        selectedIds.push(options[i].value);
-      }
-    }
-    setFormData({ ...formData, employeeIds: selectedIds });
+  const toggleEmployee = (id: number) => {
+    setFormData((prev) => {
+      const exists = prev.employeeIds.includes(id);
+
+      const newIds = exists
+        ? prev.employeeIds.filter((empId) => empId !== id)
+        : [...prev.employeeIds, id];
+      return { ...prev, employeeIds: newIds };
+    });
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
     setIsLoading(true);
     try {
+      // const formattedData = {
+      //   ...formData,
+      //   startDate: new Date(formData.startDate).toISOString(),
+      //   endDate: new Date(formData.endDate).toISOString(),
+      // };
+      console.log("submitting data :", formData);
+
       const response = await travelApis.createTravel(formData);
       setTravelResponse(response);
       console.log("Travel request successful:", response);
@@ -106,7 +117,7 @@ const TravelForm: React.FC = () => {
         <label>
           Start Date:{" "}
           <input
-            type="date"
+            type="datetime-local"
             name="startDate"
             onChange={handleChange}
             required
@@ -114,22 +125,51 @@ const TravelForm: React.FC = () => {
         </label>
         <label>
           End Date:{" "}
-          <input type="date" name="endDate" onChange={handleChange} required />
+          <input
+            type="datetime-local"
+            name="endDate"
+            onChange={handleChange}
+            required
+          />
         </label>
+        <input
+          name="maxPerDayAllowance"
+          type="number"
+          placeholder="Maximun per day allowance :"
+          onChange={handleChange}
+          required
+        />
 
         <label>Select Employees (Hold Ctrl/Cmd to select multiple):</label>
 
-        <select
-          multiple={true}
-          value={formData.employeeIds}
-          onChange={handleEmployeeChange}
-        >
-          {employees.map((emp) => (
-            <option key={emp.employeeId} value={emp.employeeId}>
-              {emp.employeeName}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-col gap-2">
+          <label className="font-semibold text-gray-700">
+            Select Travellers:
+          </label>
+          <div className="border rounded-md p-3 max-h-48 overflow-y-auto bg-gray-50">
+            {employees.map((emp) => (
+              <label
+                key={emp.employeeId}
+                className="flex items-center space-x-3 p-2 hover:bg-blue-50 rounded-md cursor-pointer transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 rounded"
+                  checked={formData.employeeIds.includes(
+                    Number(emp.employeeId),
+                  )}
+                  onChange={() => toggleEmployee(Number(emp.employeeId))}
+                />
+                <span className="text-sm text-gray-500">
+                  {emp.employeeName}
+                </span>
+              </label>
+            ))}
+          </div>
+          <p className="text-xs textgray-500">
+            {formData.employeeIds.length} employees selected
+          </p>
+        </div>
 
         <button type="submit">Submit Request</button>
       </form>
