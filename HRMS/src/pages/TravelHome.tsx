@@ -4,19 +4,22 @@ import TravelList from "../components/travels/TravelList";
 import { Link } from "react-router-dom";
 import { Plane } from "lucide-react";
 import { getUserRole } from "../utils/auth";
+import TravelDetailModal from "./TravelDetailModal";
 
 const TravelHome: React.FC = () => {
   const [travelData, setTravelData] = useState<travelResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTravel, setSelectedTravel] = useState<travelResponse | null>(null);
+  const [selectedTravel, setSelectedTravel] = useState<travelResponse | null>(
+    null,
+  );
 
   const role = getUserRole();
 
   useEffect(() => {
     const fetchTravels = async () => {
       try {
-        if (role == "HR") {
+        if (role === "HR") {
           await travelApis.getAllTravels().then(setTravelData);
         } else {
           await travelApis.getMyTravels().then(setTravelData);
@@ -29,7 +32,7 @@ const TravelHome: React.FC = () => {
       }
     };
     fetchTravels();
-  }, []);
+  }, [role]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -46,7 +49,16 @@ const TravelHome: React.FC = () => {
           <span>Create Travels</span>
         </Link>
       )}
-      <TravelList travels={travelData} onSelect = {(travel) => setSelectedTravel(travel)}/>
+      <TravelList
+        travels={travelData}
+        onSelect={(travel) => setSelectedTravel(travel)}
+      />
+      {selectedTravel && (
+        <TravelDetailModal
+          travel={selectedTravel}
+          onClose={() => setSelectedTravel(null)}
+        />
+      )}
     </div>
   );
 };

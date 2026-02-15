@@ -13,9 +13,10 @@ const TravelList: React.FC<TravelListProps> = ({ travels, onSelect }) => {
         {travels.map((trip) => (
           <div
             key={trip.travelId}
+            onClick={() => onSelect(trip)}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
-            <TravelCard travel={trip} onClick={() => onSelect(trip)} />
+            <TravelCard travel={trip} />
           </div>
         ))}
       </div>
