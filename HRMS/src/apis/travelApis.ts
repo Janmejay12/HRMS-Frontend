@@ -37,10 +37,16 @@ export const travelApis = {
     return response.data;
   },
 
+  getMyTravels: async (): Promise<travelResponse[]> => {
+    const response = await api.get<travelResponse[]>("/travels/my-travels");
+    return response.data;
+  },
+
   getTravelById: async (id: number): Promise<travelResponse> => {
     const response = await api.get<travelResponse>(`/travels/${id}`);
     return response.data;
   },
+
   changeTravelStatus: async (
     id: number,
     status: Statuses,

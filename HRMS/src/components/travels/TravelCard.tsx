@@ -4,10 +4,11 @@ import { Statuses } from "../../apis/enums";
 
 interface TravelCardProps {
   travel: travelResponse;
+  onClick?:() => void;
 }
-const TravelCard: React.FC<TravelCardProps> = ({ travel }) => {
+const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick, }) => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+    <div onClick={onClick} className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
       <h3 className="text-2xl font-bold text-gray-800 mb-2">
         {travel.travelTitle}
       </h3>

@@ -15,18 +15,15 @@ import Navbar from "./components/Navbar.tsx";
 import Index from "./pages/Index.tsx";
 import TravelHome from "./pages/TravelHome.tsx";
 import TravelForm from "./components/travels/TravelForm.tsx";
+import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 
 const AppLayout = () => {
-  const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem("token");
+  ``;
 
-  if (!isAuthenticated) {
-    navigate("/");
-  }
   return (
     <>
       <Navbar />
-      <main>
+      <main className="p-4">
         <Outlet />
       </main>
     </>
@@ -36,12 +33,17 @@ const AppLayout = () => {
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   {
-    path: "/",
-    element: <AppLayout />,
+    element: <ProtectedLayout />,
     children: [
-      { index: true, element: <Index /> },
-      { path: "/travels", element: <TravelHome /> },
-      { path: "/travel-form", element: <TravelForm /> },
+      {
+        path: "/",
+        element: <AppLayout />,
+        children: [
+          { index: true, element: <Index /> },
+          { path: "/travels", element: <TravelHome /> },
+          { path: "/travel-form", element: <TravelForm /> },
+        ],
+      },
     ],
   },
 ]);

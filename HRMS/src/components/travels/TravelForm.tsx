@@ -9,7 +9,6 @@ import {
   type createTravelRequest,
   type travelResponse,
 } from "../../apis/travelApis";
-import { api } from "../../apis/axios";
 import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 
 const TravelForm: React.FC = () => {
@@ -46,7 +45,7 @@ const TravelForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "maxPerDayAllowance" ? Number(value) : value,
+      [name]: name === "maxPerDayAllowance" ? parseFloat(value) : value,
     }));
   };
 
@@ -65,11 +64,6 @@ const TravelForm: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // const formattedData = {
-      //   ...formData,
-      //   startDate: new Date(formData.startDate).toISOString(),
-      //   endDate: new Date(formData.endDate).toISOString(),
-      // };
       console.log("submitting data :", formData);
 
       const response = await travelApis.createTravel(formData);
@@ -135,6 +129,7 @@ const TravelForm: React.FC = () => {
         <input
           name="maxPerDayAllowance"
           type="number"
+          value={formData.maxPerDayAllowance}
           placeholder="Maximun per day allowance :"
           onChange={handleChange}
           required
