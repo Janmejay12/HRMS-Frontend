@@ -53,7 +53,7 @@ export const travelApis = {
   ): Promise<travelResponse> => {
     const response = await api.put<travelResponse>(
       `/travels/${id}/status`,
-      status,
+      {status : status},
     );
     return response.data;
   },

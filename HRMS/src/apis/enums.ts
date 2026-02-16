@@ -20,3 +20,17 @@ export enum OwnerTypes {
   HR = "HR",
   EMPLOYEE = "Employee",
 }
+
+export enum ExpenseCategory {
+  Accommodation = "Accommodation",
+  Food = "Food",
+  Transport = "Transport",
+  EventFees = "EventFees",
+}
+
+export enum ExpenseStatus {
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  DRAFT = "DRAFT",
+  SUBMITTED = "SUBMITTED",
+}

@@ -49,7 +49,7 @@ export const travelDocumentApis = {
         formData,{
             headers : {
                 "Content-Type" : "multipart/form-data"
-            },
+            }
         }
     )
     
