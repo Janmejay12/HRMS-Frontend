@@ -13,7 +13,7 @@
 // }
 
 import { api } from "./axios";
-import type { ExmployementType, JobStatuses } from "./enums";
+import type { EmployementType, JobStatuses } from "./enums";
 
 export interface JobResponse {
   jobId: number;
@@ -24,7 +24,7 @@ export interface JobResponse {
   location: string;
   departmentId: number;
   salaryRange?: string;
-  employmentType: ExmployementType;
+  employmentType: EmployementType;
   status: JobStatuses;
   hrOwnerId?: number;
   defaultEmail?: string;
@@ -32,7 +32,9 @@ export interface JobResponse {
 
 export interface UpdateJobRequest {
   defaultEmail?: string;
-  hrOwnerId?: number[];
+  hrOwnerId?: number;
+  reviewerIds?: number[];
+
 }
 
 export interface ReferalRequest {
@@ -54,7 +56,7 @@ export interface ShareJobResponse {
   message: string;
 }
 export interface ShareJobRequest {
-  recipentEmail: string[];
+  recipentEmails: string[];
 }
 
 export const jobApis= {

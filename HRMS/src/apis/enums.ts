@@ -35,7 +35,7 @@ export enum ExpenseStatus {
   SUBMITTED = "SUBMITTED",
 }
 
-export enum ExmployementType {
+export enum EmployementType {
   FullTime = "FullTime",
   PartTime = "PartTime",
   Contract = "Contract",
