@@ -161,7 +161,7 @@ const TravelForm: React.FC = () => {
               </label>
             ))}
           </div>
-          <p className="text-xs textgray-500">
+          <p className="text-xs text-gray-500">
             {formData.employeeIds.length} employees selected
           </p>
         </div>

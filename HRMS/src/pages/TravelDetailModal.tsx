@@ -9,7 +9,10 @@ import { ExpenseStatus, Statuses } from "../apis/enums";
 import TravelCard from "../components/travels/TravelCard";
 import { expenseApis, type ExpenseResponse } from "../apis/expenseApis";
 import ExpenseForm from "../components/travels/ExpenseForm";
-import { expenseDocumentApis, type expenseDocumentResponse } from "../apis/expenseDocumentApis";
+import {
+  expenseDocumentApis,
+  type expenseDocumentResponse,
+} from "../apis/expenseDocumentApis";
 
 interface props {
   travel: travelResponse;
@@ -22,7 +25,9 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
   const [file, setFile] = useState<File | null>(null);
   const [currentTravel, setCurrentTravel] = useState<travelResponse>(travel);
   const [expenses, setExpenses] = useState<ExpenseResponse[]>([]);
-  const[expenseDocuments, setExpenseDocuments] = useState<Record<number, expenseDocumentResponse[]>>({});
+  const [expenseDocuments, setExpenseDocuments] = useState<
+    Record<number, expenseDocumentResponse[]>
+  >({});
 
   useEffect(() => {
     fetchDocuments();
@@ -34,24 +39,26 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
     setDocuments(docs);
   };
 
-  const fetchExpenseDocuments = async (expenseId : number) => {
-    const docs = await expenseDocumentApis.getAllExpenseDocumentsByExpenseId(expenseId);
+  const fetchExpenseDocuments = async (expenseId: number) => {
+    const docs =
+      await expenseDocumentApis.getAllExpenseDocumentsByExpenseId(expenseId);
     setExpenseDocuments((prev) => ({
-      ...prev, [expenseId] : docs,
-    }))
-  }
+      ...prev,
+      [expenseId]: docs,
+    }));
+  };
 
   const fetchExpenses = async () => {
     try {
-      let data : ExpenseResponse[];
+      let data: ExpenseResponse[];
       if (role === "HR") {
-         data = await expenseApis.getAllExpensesByTravelId(travel.travelId);
+        data = await expenseApis.getAllExpensesByTravelId(travel.travelId);
         setExpenses(data);
       } else {
-         data = await expenseApis.getMyExpenses(travel.travelId);
+        data = await expenseApis.getMyExpenses(travel.travelId);
         setExpenses(data);
       }
-      data.forEach((exp) => fetchExpenseDocuments(exp.expenseId))
+      data.forEach((exp) => fetchExpenseDocuments(exp.expenseId));
     } catch (error) {
       console.error("failed to fetch expenses", error);
     }
@@ -208,8 +215,9 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {expenses.map((exp, index) => (
-                        <tr className="border-t hover:bg-gray-50" key={index}>
+                      {expenses.map((exp) => (
+                        <React.Fragment key = {exp.expenseId}>
+                        <tr className="border-t hover:bg-gray-50" key={exp.employeeId}>
                           <td className="px-3 py-2">{exp.amount}</td>
                           <td className="px-3 py-2">{exp.currency}</td>
                           <td className="px-3 py-2">{exp.expenseCategory}</td>
@@ -252,6 +260,25 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                             </td>
                           )}
                         </tr>
+                          {expenseDocuments[exp.expenseId] && expenseDocuments[exp.expenseId].length > 0 && (
+                          <tr className="bg-white border-t">
+                          <td colSpan={6} className="px-6 py-4">
+                            <div className="flex -flex-wrap gap-4">{
+                              expenseDocuments[exp.expenseId].map((doc,index) => (
+                                <a href="{doc.storageUrl}"
+                                   target="_blank"
+                                    rel="noopener noreferrer"
+                                    key={index}
+                                    className="px-3 py-2 bg-blue-50 text-blue-700 rounded-md text-sm hover:bg-blue-100 transition"
+                                >View Reciept{index + 1}
+                                </a>
+                              ))
+                            }
+                            </div>
+                            </td>
+                            </tr>
+                      )}
+                      </React.Fragment>
                       ))}
                     </tbody>
                   </table>

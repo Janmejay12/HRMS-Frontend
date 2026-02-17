@@ -35,7 +35,7 @@ export const expenseDocumentApis = {
   getAllExpenseDocumentsByExpenseId: async (
     expenseId: number,
   ): Promise<expenseDocumentResponse[]> => {
-    const response = await api.get(`/expenses/${expenseId}/document`);
+    const response = await api.get(`/expenses/${expenseId}/documents`);
     return response.data;
   },
 
