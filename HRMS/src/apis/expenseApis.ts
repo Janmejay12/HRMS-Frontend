@@ -2,7 +2,6 @@ import { api } from "./axios";
 import type { ExpenseCategory, ExpenseStatus, Statuses } from "./enums";
 
 export interface CreateExpenseRequest {
-  travelId: number;
   currency: string;
   amount: number;
   expenseDate: string;
@@ -11,6 +10,7 @@ export interface CreateExpenseRequest {
 }
 
 export interface ExpenseResponse {
+  expenseId : number
   employeeId: number;
   travelId: number;
   currency: string;
@@ -21,6 +21,7 @@ export interface ExpenseResponse {
 }
 
 export const expenseApis = {
+ 
   createExpense: async (
     travelId: number,
     request: CreateExpenseRequest,
@@ -36,7 +37,7 @@ export const expenseApis = {
     travelId: number,
   ): Promise<ExpenseResponse[]> => {
     const response = await api.get<ExpenseResponse[]>(
-      `/travels/${travelId}expenses`,
+      `/travels/${travelId}/expenses`,
     );
     return response.data;
   },

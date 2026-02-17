@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div>
-      <nav className="bg-gray-800 p-4 shadow-lg">
+      <nav className="bg-gray-700 p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-white text-2xl font-bold">ROIMA HRMS</div>
 
