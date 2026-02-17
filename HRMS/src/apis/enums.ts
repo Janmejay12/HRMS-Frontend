@@ -34,3 +34,15 @@ export enum ExpenseStatus {
   DRAFT = "DRAFT",
   SUBMITTED = "SUBMITTED",
 }
+
+export enum ExmployementType {
+  FullTime = "FullTime",
+  PartTime = "PartTime",
+  Contract = "Contract",
+}
+export enum JobStatuses {
+  NEW = "NEW",
+  IN_REVIEW = "IN_REVIEW",
+  HIRED = "HIRED",
+  ON_HOLD = "ON_HOLD",
+}

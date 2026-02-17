@@ -108,7 +108,10 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
 
   const canHrAct = isHR;
 
-  const canUpload = isHR || currentTravel.status === Statuses.APPROVED;
+  const isClosed =
+    currentTravel.status === Statuses.Cancelled ||
+    currentTravel.status === Statuses.Completed;
+
   const totalAmount = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
   return (
@@ -157,7 +160,7 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
             <div className="bg-gray-50 p-6 rounded-x1 space-y-4">
               <h3 className="text-lg font-semibold">Documents</h3>
 
-              {canUpload && (
+              {!isClosed && (
                 <div className="flex gap-3 items-center">
                   <h4>Upload Document</h4>
                   <input
@@ -216,69 +219,76 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                     </thead>
                     <tbody>
                       {expenses.map((exp) => (
-                        <React.Fragment key = {exp.expenseId}>
-                        <tr className="border-t hover:bg-gray-50" key={exp.employeeId}>
-                          <td className="px-3 py-2">{exp.amount}</td>
-                          <td className="px-3 py-2">{exp.currency}</td>
-                          <td className="px-3 py-2">{exp.expenseCategory}</td>
-                          <td className="px-3 py-2">{exp.expenseStatus}</td>
-                          <td className="px-3 py-2">
-                            {new Date(exp.expenseDate).toLocaleString()}
-                          </td>
-
-                          {isHR && (
-                            <td className="px-3 py-2 space-x-2">
-                              {(exp.expenseStatus === ExpenseStatus.DRAFT ||
-                                exp.expenseStatus ===
-                                  ExpenseStatus.SUBMITTED) && (
-                                <>
-                                  <button
-                                    onClick={() =>
-                                      updateExpensestatus(
-                                        exp.expenseId,
-                                        ExpenseStatus.APPROVED,
-                                      )
-                                    }
-                                    className="px-3 py-1 bg-green-600 text-gray rounded"
-                                  >
-                                    Approve
-                                  </button>
-
-                                  <button
-                                    onClick={() =>
-                                      updateExpensestatus(
-                                        exp.expenseId,
-                                        ExpenseStatus.REJECTED,
-                                      )
-                                    }
-                                    className="px-3 py-1 bg-red-600 text-gray rounded"
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              )}
+                        <React.Fragment key={exp.expenseId}>
+                          <tr
+                            className="border-t hover:bg-gray-50"
+                            key={exp.employeeId}
+                          >
+                            <td className="px-3 py-2">{exp.amount}</td>
+                            <td className="px-3 py-2">{exp.currency}</td>
+                            <td className="px-3 py-2">{exp.expenseCategory}</td>
+                            <td className="px-3 py-2">{exp.expenseStatus}</td>
+                            <td className="px-3 py-2">
+                              {new Date(exp.expenseDate).toLocaleString()}
                             </td>
-                          )}
-                        </tr>
-                          {expenseDocuments[exp.expenseId] && expenseDocuments[exp.expenseId].length > 0 && (
-                          <tr className="bg-white border-t">
-                          <td colSpan={6} className="px-6 py-4">
-                            <div className="flex -flex-wrap gap-4">{
-                              expenseDocuments[exp.expenseId].map((doc,index) => (
-                                <a href="{doc.storageUrl}"
-                                   target="_blank"
-                                    rel="noopener noreferrer"
-                                    key={index}
-                                    className="px-3 py-2 bg-blue-50 text-blue-700 rounded-md text-sm hover:bg-blue-100 transition"
-                                >View Reciept{index + 1}
-                                </a>
-                              ))
-                            }
-                            </div>
-                            </td>
-                            </tr>
-                      )}
-                      </React.Fragment>
+
+                            {isHR && (
+                              <td className="px-3 py-2 space-x-2">
+                                {(exp.expenseStatus === ExpenseStatus.DRAFT ||
+                                  exp.expenseStatus ===
+                                    ExpenseStatus.SUBMITTED) && (
+                                  <>
+                                    <button
+                                      onClick={() =>
+                                        updateExpensestatus(
+                                          exp.expenseId,
+                                          ExpenseStatus.APPROVED,
+                                        )
+                                      }
+                                      className="px-3 py-1 bg-green-600 text-gray rounded"
+                                    >
+                                      Approve
+                                    </button>
+
+                                    <button
+                                      onClick={() =>
+                                        updateExpensestatus(
+                                          exp.expenseId,
+                                          ExpenseStatus.REJECTED,
+                                        )
+                                      }
+                                      className="px-3 py-1 bg-red-600 text-gray rounded"
+                                    >
+                                      Reject
+                                    </button>
+                                  </>
+                                )}
+                              </td>
+                            )}
+                          </tr>
+                          {expenseDocuments[exp.expenseId] &&
+                            expenseDocuments[exp.expenseId].length > 0 && (
+                              <tr className="bg-white border-t">
+                                <td colSpan={6} className="px-6 py-4">
+                                  <div className="flex -flex-wrap gap-4">
+                                    {expenseDocuments[exp.expenseId].map(
+                                      (doc, index) => (
+                                        <a
+                                          href={doc.storageUrl}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          key={index}
+                                          className="px-3 py-2 bg-blue-50 text-blue-700 rounded-md text-sm hover:bg-blue-100 transition"
+                                        >
+                                          View Reciept{index + 1}
+                                        </a>
+                                      ),
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>

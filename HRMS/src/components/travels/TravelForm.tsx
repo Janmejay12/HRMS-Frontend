@@ -69,6 +69,15 @@ const TravelForm: React.FC = () => {
       const response = await travelApis.createTravel(formData);
       setTravelResponse(response);
       console.log("Travel request successful:", response);
+      setFormData({ travelTitle: "",
+    location: "",
+    purpose: "",
+    startDate: "",
+    maxPerDayAllowance: 0,
+    endDate: "",
+    employeeIds: [],
+    statusId: 1,
+  })
     } catch (err) {
       setError("Failed to fetch travel data");
       console.error(err);
