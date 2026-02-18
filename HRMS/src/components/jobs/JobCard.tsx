@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import type { JobResponse } from "../../apis/jobApis";
 import { JobStatuses } from "../../apis/enums";
+import ShareJobModal from "./ShareJobModal";
+import ReferJobModal from "./ReferJobModal";
 
 interface Props {
   job: JobResponse;
@@ -24,7 +26,56 @@ const JobCard: React.FC<Props> = ({ job }) => {
         return "bg-gray-100 text-blue-700";
     }
   };
-  return <div></div>;
+  return (
+    <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold">{job.title}</h2>
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor()}`}
+        >
+          {job.status}
+        </span>
+      </div>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>
+          <strong>Loaction :</strong>
+          {job.location}
+        </p>
+        <p>
+          <strong>Employement :</strong>
+          {job.employmentType}
+        </p>
+        {job.salaryRange && (
+          <p>
+            <strong>Salary:</strong>
+            {job.salaryRange}
+          </p>
+        )}
+      </div>
+      <div className="flex gap-3 pt-3">
+        <button
+          onClick={() => setIsShareOpen(true)}
+          className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+        >
+          Share
+        </button>
+
+        <button
+          onClick={() => setIsReferOpen(true)}
+          className="flex-1 bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700"
+        >
+          Refer
+        </button>
+      </div>
+      {isShareOpen && (
+        <ShareJobModal job={job} onClose={() => setIsShareOpen(false)} />
+      )}
+
+      {isReferOpen && (
+        <ReferJobModal job={job.jobId} onClose={() => setIsReferOpen(false)} />
+      )}
+    </div>
+  );
 };
 
 export default JobCard;
