@@ -34,7 +34,6 @@ export interface UpdateJobRequest {
   defaultEmail?: string;
   hrOwnerId?: number;
   reviewerIds?: number[];
-
 }
 
 export interface ReferalRequest {
@@ -56,53 +55,55 @@ export interface ShareJobResponse {
   message: string;
 }
 export interface ShareJobRequest {
-  recipentEmails: string[];
+  recipientEmails: string[];
 }
 
-export const jobApis= {
-  
-    getAllJobs: async (): Promise<JobResponse[]> => {
-    const reponse =await api.get<JobResponse[]>("/jobs");
+export const jobApis = {
+  getAllJobs: async (): Promise<JobResponse[]> => {
+    const reponse = await api.get<JobResponse[]>("/jobs");
     return reponse.data;
   },
 
-  updateJob:async (jobId: number, request: UpdateJobRequest) => {
+  updateJob: async (jobId: number, request: UpdateJobRequest) => {
     const reponse = await api.put<JobResponse>(`/jobs/${jobId}`, request);
     return reponse.data;
   },
 
- createReferal :async (
-  jobid: number,
-  requestData: ReferalRequest,
-  file: File
-): Promise<ReferalResponse> => {
-  const formData = new FormData();
+  createReferal: async (
+    jobid: number,
+    requestData: ReferalRequest,
+    file: File,
+  ): Promise<ReferalResponse> => {
+    const formData = new FormData();
 
-  formData.append(
-    "data",
-    new Blob([JSON.stringify(requestData)], { type: 'application/json' })
-  );
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(requestData)], { type: "application/json" }),
+    );
 
-  formData.append('file', file);
+    formData.append("file", file);
 
-  const response = await api.post<ReferalResponse>(
-    `/jobs/${jobid}/referals`, 
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const response = await api.post<ReferalResponse>(
+      `/jobs/${jobid}/referals`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    }
-  );
+    );
 
-  return response.data;
-},
-
-shareJob : async (
-    jobid : number,
-    request : ShareJobRequest,
-): Promise<ShareJobResponse> => {
-    const response = await api.post<ShareJobResponse>(`/jobs/${jobid}/share`,request);
     return response.data;
-},
+  },
+
+  shareJob: async (
+    jobid: number,
+    request: ShareJobRequest,
+  ): Promise<ShareJobResponse> => {
+    const response = await api.post<ShareJobResponse>(
+      `/jobs/${jobid}/share`,
+      request,
+    );
+    return response.data;
+  },
 };

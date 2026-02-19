@@ -40,11 +40,10 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
   const maxAllowedDate = new Date(endDate);
   maxAllowedDate.setDate(maxAllowedDate.getDate() + 10);
 
-  const isTravelCancelled =
-    travel.status === (Statuses.Cancelled);
+ 
   const isValidExpenseDate = now >= startDate && now <= maxAllowedDate;
   const canUploadExpense =
-    isValidExpenseDate && !isTravelCancelled;
+    isValidExpenseDate;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -93,7 +92,7 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
       <div>
         
 
-        {isTravelCancelled && !isValidExpenseDate && (
+        {!isValidExpenseDate && (
           <p>
             Expenses can only be added from the travel start date until 10 days
             after the travel end date or When the travel is not cancelled.

@@ -69,15 +69,16 @@ const TravelForm: React.FC = () => {
       const response = await travelApis.createTravel(formData);
       setTravelResponse(response);
       console.log("Travel request successful:", response);
-      setFormData({ travelTitle: "",
-    location: "",
-    purpose: "",
-    startDate: "",
-    maxPerDayAllowance: 0,
-    endDate: "",
-    employeeIds: [],
-    statusId: 1,
-  })
+      setFormData({
+        travelTitle: "",
+        location: "",
+        purpose: "",
+        startDate: "",
+        maxPerDayAllowance: 0,
+        endDate: "",
+        employeeIds: [],
+        statusId: 1,
+      });
     } catch (err) {
       setError("Failed to fetch travel data");
       console.error(err);
@@ -86,8 +87,9 @@ const TravelForm: React.FC = () => {
     }
   };
   return (
-    <div>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
       <form
+        className="space-y-4"
         onSubmit={handleSubmit}
         style={{
           display: "flex",
@@ -96,25 +98,30 @@ const TravelForm: React.FC = () => {
           maxWidth: "400px",
         }}
       >
-        <h2>Create Travel Request</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Create Travel Request
+        </h2>
 
         <input
           name="travelTitle"
           placeholder="Travel Title"
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         <input
           name="location"
           placeholder="Location"
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         <textarea
           name="purpose"
           placeholder="Purpose"
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
 
         <label>
@@ -124,6 +131,7 @@ const TravelForm: React.FC = () => {
             name="startDate"
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </label>
         <label>
@@ -133,6 +141,7 @@ const TravelForm: React.FC = () => {
             name="endDate"
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </label>
         <input
@@ -142,6 +151,7 @@ const TravelForm: React.FC = () => {
           placeholder="Maximun per day allowance :"
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
 
         <label>Select Employees (Hold Ctrl/Cmd to select multiple):</label>

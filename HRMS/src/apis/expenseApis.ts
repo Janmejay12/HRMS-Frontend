@@ -45,8 +45,8 @@ export const expenseApis = {
   getMyExpenses: async (
     travelId: number,
   ): Promise<ExpenseResponse[]> => {
-    const response = await api.post<ExpenseResponse[]>(
-      `/travels/${travelId}/expenses/my-expenses`,
+    const response = await api.get<ExpenseResponse[]>(
+      `/travels/${travelId}/expenses/my`,
     );
     return response.data;
   },

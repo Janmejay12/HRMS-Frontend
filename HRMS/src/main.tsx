@@ -16,6 +16,7 @@ import Index from "./pages/Index.tsx";
 import TravelHome from "./pages/TravelHome.tsx";
 import TravelForm from "./components/travels/TravelForm.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
+import JobsHome from "./pages/jobs/JobsHome.tsx";
 
 const AppLayout = () => {
   ``;
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           { index: true, element: <Index /> },
           { path: "/travels", element: <TravelHome /> },
           { path: "/travel-form", element: <TravelForm /> },
+          { path: "/jobs", element: <JobsHome /> },
         ],
       },
     ],

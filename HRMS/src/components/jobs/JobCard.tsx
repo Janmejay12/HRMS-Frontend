@@ -38,16 +38,16 @@ const JobCard: React.FC<Props> = ({ job }) => {
       </div>
       <div className="text-sm text-gray-600 space-y-1">
         <p>
-          <strong>Loaction :</strong>
-          {job.location}
+          <strong>Loaction : </strong>
+            {job.location}
         </p>
         <p>
-          <strong>Employement :</strong>
+          <strong>Employement : </strong>
           {job.employmentType}
         </p>
         {job.salaryRange && (
           <p>
-            <strong>Salary:</strong>
+            <strong>Salary: </strong>
             {job.salaryRange}
           </p>
         )}
@@ -55,24 +55,24 @@ const JobCard: React.FC<Props> = ({ job }) => {
       <div className="flex gap-3 pt-3">
         <button
           onClick={() => setIsShareOpen(true)}
-          className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+          className="flex-1 bg-blue-600 text-gray py-2 rounded-md hover:bg-blue-700"
         >
           Share
         </button>
 
         <button
           onClick={() => setIsReferOpen(true)}
-          className="flex-1 bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700"
+          className="flex-1 bg-purple-600 text-gray py-2 rounded-md hover:bg-purple-700"
         >
           Refer
         </button>
       </div>
       {isShareOpen && (
-        <ShareJobModal job={job} onClose={() => setIsShareOpen(false)} />
+        <ShareJobModal jobId={job.jobId} onClose={() => setIsShareOpen(false)} />
       )}
 
       {isReferOpen && (
-        <ReferJobModal job={job.jobId} onClose={() => setIsReferOpen(false)} />
+        <ReferJobModal job={job} onClose={() => setIsReferOpen(false)} />
       )}
     </div>
   );

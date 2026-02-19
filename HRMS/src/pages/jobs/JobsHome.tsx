@@ -34,9 +34,9 @@ const JobsHome = () => {
             <p className="text-gray-500">No jobs available</p>
         ) : (
             <div className="grid md:grid-cols2 lg:grid-cols-3 gap-6">
-                {jobs.map(job) => (
+                {jobs.map((job) => (
                     <JobCard key = {job.jobId} job ={job}/>
-                )}
+                ))}
             </div>
         )}
     </div>

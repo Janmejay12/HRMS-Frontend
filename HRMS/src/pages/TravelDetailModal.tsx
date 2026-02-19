@@ -127,7 +127,7 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
           <div className="space-y-4">
             <TravelCard travel={currentTravel} />
             <div className="flex flex-wrap gap-3">
-              {canEmployeeAct && (
+              {/* {canEmployeeAct && (
                 <>
                   <button onClick={() => updateTravelstatus(Statuses.APPROVED)}>
                     Approve
@@ -136,7 +136,7 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                     Reject
                   </button>
                 </>
-              )}
+              )} */}
 
               {canHrAct && (
                 <>
