@@ -8,18 +8,18 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
    const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     if (location.key !== "default") {
-  //       navigate(-1);
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      if (location.key !== "default") {
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
+    }
+  }, []);
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 

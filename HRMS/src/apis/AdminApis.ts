@@ -2,6 +2,7 @@ import { api } from "./axios";
 
 export interface EmployeeResponse {
   employeeName: string;
+  designation? : string;
   employeeId: number;
   birthDate: Date;
   joiningDate: Date;

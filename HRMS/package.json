@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@balkangraph/orgchart.js": "^9.0.57",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.5",
     "jwt-decode": "^4.0.0",
