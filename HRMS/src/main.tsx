@@ -18,6 +18,9 @@ import TravelForm from "./components/travels/TravelForm.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 import JobsHome from "./pages/jobs/JobsHome.tsx";
 import Oraganization from "./pages/orgCharts/Oraganization.tsx";
+import GamesHome from "./pages/games/GamesHome.tsx";
+import GameSlots from "./pages/games/GameSlots.tsx";
+import MyBookings from "./pages/MyBookings.tsx";
 
 const AppLayout = () => {
   ``;
@@ -46,6 +49,9 @@ const router = createBrowserRouter([
           { path: "/travel-form", element: <TravelForm /> },
           { path: "/jobs", element: <JobsHome /> },
           { path: "/orgs", element: <Oraganization /> },
+          { path: "/games", element: <GamesHome /> },
+          { path: "/games/:gameId", element: <GameSlots /> },
+          { path: "/my-bookings", element: <MyBookings /> },
         ],
       },
     ],

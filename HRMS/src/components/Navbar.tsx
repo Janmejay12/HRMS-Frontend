@@ -45,7 +45,7 @@ const Navbar = () => {
             </a>
 
             <a
-              href="#"
+              href="/games"
               className="text-gray-300 hover:text-white transition duration-300 flex items-center space-x-2"
             >
               <Joystick className="w-4 h-4" />

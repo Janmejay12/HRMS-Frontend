@@ -9,7 +9,7 @@ export interface GameResponse {
 }
 
 export interface GameSlotResponse {
-  SlotId: number;
+  gameSlotId: number;
   slotNumber: number;
   startTime: string;
   endTime: string;

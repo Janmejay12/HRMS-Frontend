@@ -1,57 +1,64 @@
 import { api } from "./axios";
 
 export interface OrgChartNodeResponse {
-  id: number;
-  name: string;
-  designation: string;
+  employeeId: number;
+  employeeName: string;
+  designation: string | null;
 }
 
 export interface OrgChartResponse {
   managerialChain: OrgChartNodeResponse[];
   directReports: OrgChartNodeResponse[];
-  selectedEmployee: OrgChartNodeResponse;
+  selectedNode: OrgChartNodeResponse;
 }
 
 export interface OrgChartNode {
   id: number;
+  pid?: number | null;
   name: string;
   title: string;
-  children?: OrgChartNode[];
-  [key: string]: any;
 }
 
-export function buildOrgChartData(response: OrgChartResponse): OrgChartNode {
-  // Build managerial chain
-  let root: OrgChartNode | null = null;
-  let current: OrgChartNode | null = null;
-  response.managerialChain.forEach((emp, index) => {
-    const node: OrgChartNode = {
-      id: emp.id,
-      name: emp.name,
+export function buildOrgChartData(response: OrgChartResponse) {
+  const nodes: any[] = [];
+
+  let previousId: number | undefined = undefined;
+
+  // managerial chain
+  response.managerialChain.forEach((emp) => {
+    const node: any = {
+      id: emp.employeeId,
+      name: emp.employeeName,
       title: emp.designation,
-      children: [],
     };
 
-    if (!root) {
-      root = node;
-    } else if (current) {
-      current.children!.push(node);
+    if (previousId !== undefined) {
+      node.pid = previousId;
     }
-    current = node;
 
-    // If this is the selected employee, attach direct reports
-    if (emp.id === response.selectedEmployee.id) {
-      console.log(emp.id);
-      node.children = response.directReports.map((dr) => ({
-        id: dr.id,
-        name: dr.name,
-        title: dr.designation,
+    nodes.push(node);
 
-      }));
+    previousId = emp.employeeId;
+  });
+
+  // direct reports
+  const selectedId = response.selectedNode?.employeeId ?? previousId;
+
+  response.directReports.forEach((emp) => {
+    // prevent duplicate insertion if already in managerialChain
+    if (!nodes.some((n) => n.id === emp.employeeId)) {
+      nodes.push({
+        id: emp.employeeId,
+        pid: selectedId,
+        name: emp.employeeName,
+        title: emp.designation ?? "Employee",
+      });
     }
   });
 
-  return root!;
+  console.log("Final OrgChart nodes:", nodes);
+
+  return nodes;
 }
 
 export const OrgChartApis = {

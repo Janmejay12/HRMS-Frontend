@@ -12,7 +12,7 @@ const Oraganization = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEmployee, setSelectedEmployee] =
     useState<EmployeeResponse | null>(null);
-  const [orgChart, setOrgChart] = useState<OrgChartNode | null>(null);
+  const [orgChartNodes, setOrgChartNodes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,11 +23,20 @@ const Oraganization = () => {
     var fetchedEmployees = await adminApis.getAllEmployees();
     setEmployees(fetchedEmployees);
   };
+
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp) =>
       emp.employeeName.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [employees, searchTerm]);
+
+  const handleNodeClick = (employeeId: number) => {
+    const employee = employees.find((e) => e.employeeId === employeeId);
+
+    if (employee) {
+      setSelectedEmployee(employee);
+    }
+  };
 
   useEffect(() => {
     if (selectedEmployee) {
@@ -41,26 +50,26 @@ const Oraganization = () => {
       setLoading(true);
 
       const data = await OrgChartApis.getOrgChart(id);
+      console.log("ORG CHART RAW RESPONSE:", data);
 
       if (!data) {
         console.warn("No data received for Org Chart with ID:", id);
-        setOrgChart(null);
+        setOrgChartNodes([]);
         setLoading(false);
         return;
       }
-      
-      const node = buildOrgChartData(data);
-      console.log(node.name)
 
-      if (!node) {
-        console.warn("Failed to build org chart data.");
-        setOrgChart(null);
+      const nodes = buildOrgChartData(data);
+
+      if (!nodes || nodes.length === 0) {
+        console.warn("No org chart nodes built");
+        setOrgChartNodes([]);
       } else {
-        setOrgChart(node);
+        setOrgChartNodes(nodes);
       }
     } catch (error) {
       console.error("Error fetching Org Chart:", error);
-      setOrgChart(null);
+      setOrgChartNodes([]);
     } finally {
       setLoading(false);
     }
@@ -84,14 +93,14 @@ const Oraganization = () => {
             onClick={() => setSelectedEmployee(emp)}
             style={{ marginRight: 10 }}
           >
-            {emp.employeeName} ({emp.designation})
+            {emp.employeeName}
           </button>
         ))}
       </div>
       {loading && <p>Loading Org Chart...</p>}
-      {orgChart && !loading && (
+      {orgChartNodes.length > 0 && !loading && (
         <div>
-          <OrgChartComponent node={orgChart} />
+          <OrgChartComponent nodes={orgChartNodes} onNodeClick={handleNodeClick} />
         </div>
       )}
     </div>
