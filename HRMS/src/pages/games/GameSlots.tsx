@@ -7,6 +7,7 @@ import {
 } from "../../apis/GameApis";
 import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 import { BookingApis } from "../../apis/bookSlotApis";
+import { toast } from "sonner";
 
 const GameSlots = () => {
   const { gameId } = useParams();
@@ -46,12 +47,10 @@ const GameSlots = () => {
         gameSlotId: slotId,
         playerIds: selectedPlayers,
       });
-
-      alert("Slot booked successfully");
-
       fetchSlots();
+      toast.success("Slot booked successfully");
     } catch (e: any) {
-      alert(e.response?.data || "Booking failed");
+      toast.error(e.response?.data || "Booking failed");
     } finally {
       setBookingLoading(null);
     }
@@ -109,7 +108,6 @@ const GameSlots = () => {
             </p>
 
             <button
-             
               onClick={() => handleBook(slot.gameSlotId)}
               className="mt-4 w-full bg-blue-600 text-gray py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
             >

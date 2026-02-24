@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { jobApis, type JobResponse } from "../../apis/jobApis";
 import JobCard from "../../components/jobs/JobCard";
+import { toast } from "sonner";
 
 const JobsHome = () => {
   const [jobs, setJobs] = useState<JobResponse[]>([]);
@@ -17,6 +18,7 @@ const JobsHome = () => {
       setJobs(data);
     } catch (err) {
       setError("failed to fetch jobs");
+      toast.error("Failed to fetch jobs");
     } finally {
       setLoading(false);
     }
@@ -27,20 +29,22 @@ const JobsHome = () => {
   if (error)
     return <div className="p-8 text-center text-red-500">Error: {error}</div>;
 
-  return <div>
-    <div className="p-8 space-y-6">
+  return (
+    <div>
+      <div className="p-8 space-y-6">
         <h1 className="text-2xl font-bold">Open positions</h1>
         {jobs.length === 0 ? (
-            <p className="text-gray-500">No jobs available</p>
+          <p className="text-gray-500">No jobs available</p>
         ) : (
-            <div className="grid md:grid-cols2 lg:grid-cols-3 gap-6">
-                {jobs.map((job) => (
-                    <JobCard key = {job.jobId} job ={job}/>
-                ))}
-            </div>
+          <div className="grid md:grid-cols2 lg:grid-cols-3 gap-6">
+            {jobs.map((job) => (
+              <JobCard key={job.jobId} job={job} />
+            ))}
+          </div>
         )}
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default JobsHome;

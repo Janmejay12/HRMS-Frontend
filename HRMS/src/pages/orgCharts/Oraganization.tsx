@@ -6,6 +6,7 @@ import {
   type OrgChartNode,
 } from "../../apis/OrgChartApis";
 import OrgChartComponent from "../../components/orgCharts/OrgChartComponent";
+import { toast } from "sonner";
 
 const Oraganization = () => {
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
@@ -50,10 +51,9 @@ const Oraganization = () => {
       setLoading(true);
 
       const data = await OrgChartApis.getOrgChart(id);
-      console.log("ORG CHART RAW RESPONSE:", data);
-
+      toast.success("Org Chart Created");
       if (!data) {
-        console.warn("No data received for Org Chart with ID:", id);
+        toast.error("Failed fetching OrgChart of the selected employee");
         setOrgChartNodes([]);
         setLoading(false);
         return;
@@ -68,7 +68,7 @@ const Oraganization = () => {
         setOrgChartNodes(nodes);
       }
     } catch (error) {
-      console.error("Error fetching Org Chart:", error);
+      toast.error("Failed fetching OrgChart of the selected employee");
       setOrgChartNodes([]);
     } finally {
       setLoading(false);
@@ -100,7 +100,10 @@ const Oraganization = () => {
       {loading && <p>Loading Org Chart...</p>}
       {orgChartNodes.length > 0 && !loading && (
         <div>
-          <OrgChartComponent nodes={orgChartNodes} onNodeClick={handleNodeClick} />
+          <OrgChartComponent
+            nodes={orgChartNodes}
+            onNodeClick={handleNodeClick}
+          />
         </div>
       )}
     </div>

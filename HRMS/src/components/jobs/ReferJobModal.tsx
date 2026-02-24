@@ -5,6 +5,7 @@ import {
   type ReferalRequest,
   type ReferalResponse,
 } from "../../apis/jobApis";
+import { toast } from "sonner";
 
 interface Props {
   job: JobResponse;
@@ -61,6 +62,7 @@ const ReferJobModal: React.FC<Props> = ({ job, onClose }) => {
       );
 
       setSuccess(true);
+      toast.success("Referal created succesfully");
 
       setFormData({
         candidateName: "",
@@ -68,14 +70,13 @@ const ReferJobModal: React.FC<Props> = ({ job, onClose }) => {
         shortNote: "",
       });
     } catch (err: any) {
-      setError(
-        err.response?.data?.message || "Referral submitted successfully!",
-      );
-      // setFormData({
-      //   candidateName: "",
-      //   candidateEmail: "",
-      //   shortNote: "",
-      // });
+      setError(err.response?.data?.message || "Error creating referal");
+      toast.error(err.response?.data?.message);
+      setFormData({
+        candidateName: "",
+        candidateEmail: "",
+        shortNote: "",
+      });
     } finally {
       setLoading(false);
     }

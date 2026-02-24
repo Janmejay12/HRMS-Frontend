@@ -13,6 +13,7 @@ import {
   expenseDocumentApis,
   type expenseDocumentResponse,
 } from "../apis/expenseDocumentApis";
+import { toast } from "sonner";
 
 interface props {
   travel: travelResponse;
@@ -59,8 +60,8 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
         setExpenses(data);
       }
       data.forEach((exp) => fetchExpenseDocuments(exp.expenseId));
-    } catch (error) {
-      console.error("failed to fetch expenses", error);
+    } catch (error: any) {
+      toast.error("failed to fetch expenses");
     }
   };
 
@@ -80,7 +81,7 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
       await expenseApis.changeExpenseStatus(travel.travelId, expenseId, status);
       fetchExpenses();
     } catch (err) {
-      console.error("failed to update expense status", err);
+      toast.error("failed to update expense status");
     }
   };
 

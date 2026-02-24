@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { jobApis, type JobResponse } from "../../apis/jobApis";
+import { toast } from "sonner";
 
 interface Props {
   jobId: number;
@@ -31,16 +32,20 @@ const ShareJobModal: React.FC<Props> = ({ jobId, onClose }) => {
       setLoading(true);
       const res = await jobApis.shareJob(jobId, { recipientEmails: emailList });
 
-      if (!res) throw new Error("Failed to share job");
+      if (!res) {
+        toast.error("Failed to share job");
+        throw new Error("Failed to share job");
+      }
 
       setSuccess(true);
       {
-        success && <p>Job Shared Successfully</p>;
+        success && toast.success("Job shared successfully");
       }
       setEmails("");
       setTimeout(() => onClose(), 1200);
-    } catch (err) {
+    } catch (err:any) {
       setError((err as Error).message);
+      toast.error(err.response?.data?.message);
     } finally {
       setLoading(false);
     }

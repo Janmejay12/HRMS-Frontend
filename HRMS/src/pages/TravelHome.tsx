@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { travelApis, type travelResponse } from "../apis/travelApis";
 import TravelList from "../components/travels/TravelList";
 import { Link } from "react-router-dom";
 import { Plane } from "lucide-react";
 import { getUserRole } from "../utils/auth";
 import TravelDetailModal from "./TravelDetailModal";
+import { toast } from "sonner";
 
 const TravelHome: React.FC = () => {
   const [travelData, setTravelData] = useState<travelResponse[]>([]);
@@ -13,6 +14,7 @@ const TravelHome: React.FC = () => {
   const [selectedTravel, setSelectedTravel] = useState<travelResponse | null>(
     null,
   );
+  const [searchTerm, setSearchTerm] = useState("");
 
   const role = getUserRole();
 
@@ -26,7 +28,7 @@ const TravelHome: React.FC = () => {
         }
       } catch (err) {
         setError("Failed to fetch travel data");
-        console.error(err);
+        toast.error("Failed to fetch travel data");
       } finally {
         setLoading(false);
       }
@@ -34,23 +36,49 @@ const TravelHome: React.FC = () => {
     fetchTravels();
   }, [role]);
 
+  const filteredTravels = useMemo(() => {
+    return travelData.filter((travel) =>
+      travel.travelTitle.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [travelData, searchTerm]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white-900 mb-4">Your Travels:</h2>
-      {role == "HR" && (
-        <Link
-          to="/travel-form"
-          className="text-white-300 hover:text-white transition duration-300 flex items-center space-x-2"
-        >
-          <Plane className="w-4 h-4" />
-          <span>Create Travels</span>
-        </Link>
-      )}
+      <div className="relative flex items-center justify-between mb-6">
+
+        <div className="w-1/3">
+          {role === "HR" && (
+            <Link
+              to="/travel-form"
+              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow"
+            >
+              <Plane className="w-4 h-4" />
+              Create Travels
+            </Link>
+          )}
+        </div>
+
+
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <h2 className="text-2xl font-bold text-gray-800">Your Travels</h2>
+        </div>
+
+
+        <div className="w-1/3 flex justify-end">
+          <input
+            type="text"
+            placeholder="Search travels..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </div>
       <TravelList
-        travels={travelData}
+        travels={filteredTravels}
         onSelect={(travel) => setSelectedTravel(travel)}
       />
       {selectedTravel && (

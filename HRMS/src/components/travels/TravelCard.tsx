@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { travelResponse } from "../../apis/travelApis";
 import { Statuses } from "../../apis/enums";
+import { adminApis } from "../../apis/AdminApis";
 
 interface TravelCardProps {
   travel: travelResponse;
-  onClick?:() => void;
+  onClick?: () => void;
 }
-const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick, }) => {
+const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick }) => {
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
       <h3 className="text-2xl font-bold text-gray-800 mb-2">
@@ -28,7 +29,7 @@ const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick, }) => {
         <h4 className="text-sm font-semibold text-gray-700 mb-1">
           Travellers:
         </h4>
-        {travel.travellers.map((tr, index) => (
+        {travel.travellerNames.map((tr, index) => (
           <p
             key={index}
             className="bg-gray-100 px-3 py-1 rounded-md text-gray-800 text-sm mb-1"
@@ -39,7 +40,7 @@ const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick, }) => {
       </div>
 
       <p className="text-xs text-gray-500 mb-1">
-        Created by: {travel.travelCreatedBy}
+        Created by: {travel.createdByName}
       </p>
 
       <p

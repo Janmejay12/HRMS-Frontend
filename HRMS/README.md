@@ -1,73 +1,281 @@
-# React + TypeScript + Vite
+🏢 Human Resource Management System (HRMS) – Backend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Backend service for an enterprise-grade Human Resource Management System (HRMS) designed to manage:
 
-Currently, two official plugins are available:
+Travel lifecycle management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Expense tracking and approvals
 
-## React Compiler
+Document uploads and storage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Organizational hierarchy
 
-## Expanding the ESLint configuration
+Job portal and referrals
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Game slot booking system
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Built with Spring Boot 3, secured using JWT Authentication, and integrated with Cloudinary for scalable document storage.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+📦 Technology Stack
+Layer Technology
+Backend Framework Spring Boot 3
+Language Java 21
+Database Microsoft SQL Server
+ORM Spring Data JPA / Hibernate
+Security Spring Security + JWT
+File Storage Cloudinary
+API Docs OpenAPI / Swagger
+Build Tool Gradle
+🔐 Authentication & Authorization
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+✔ JWT-based authentication
+✔ Stateless session management
+✔ Role-based access control
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Supported Roles:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+👨‍💼 HR
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+👨‍💻 Employee
+
+Endpoint:
+
+POST /api/auth/login
+✈️ Travel Management
+HR Capabilities
+
+Create travel requests
+
+Assign employees
+
+Set per-day allowance
+
+Cancel travel
+
+Mark travel as completed
+
+Employee Capabilities
+
+Approve travel
+
+Reject travel
+
+Endpoints
+GET /api/travels
+GET /api/travels/{id}
+GET /api/travels/my-travels
+POST /api/travels
+PUT /api/travels/{id}/status
+DELETE /api/travels/{id}
+📁 Travel Document Management
+
+Cloud-based document storage using Cloudinary.
+
+Supports:
+
+Travel tickets
+
+Identification documents
+
+Permits
+
+Supporting files
+
+Endpoints:
+
+POST /api/travels/{travelId}/documents
+GET /api/travels/{travelId}/documents
+GET /api/travels/{travelId}/documents/{documentId}
+💰 Expense Management
+
+Employees can submit expenses linked to travel.
+
+HR can approve or reject expenses.
+
+Features:
+
+Travel-linked expenses
+
+Employee ownership validation
+
+Expense lifecycle tracking
+
+Endpoints:
+
+GET /api/travels/{travelId}/expenses
+GET /api/travels/{travelId}/expenses/my
+GET /api/travels/{travelId}/expenses/{expenseId}
+POST /api/travels/{travelId}/expenses
+PUT /api/travels/{travelId}/expenses/{expenseId}/status
+🏢 Organization Chart
+
+Supports hierarchical employee relationships.
+
+Endpoint:
+
+GET /api/employees/{id}/org-charts
+💼 Job Portal & Referral System
+
+Features:
+
+Create jobs
+
+Share jobs via email
+
+Refer candidates
+
+Upload resumes
+
+Endpoints:
+
+GET /api/jobs
+POST /api/jobs
+PUT /api/jobs/{id}
+POST /api/jobs/{id}/share
+POST /api/jobs/{id}/referals
+🎮 Game Slot Booking System
+
+Features:
+
+Create games
+
+Define slots
+
+Book slots
+
+Cancel bookings
+
+Endpoints:
+
+GET /api/games
+PUT /api/games/{id}
+
+GET /api/games/{id}/game-slots
+
+POST /api/bookings/book-slots
+PUT /api/bookings/cancel/{bookingId}
+
+GET /api/bookings/my-bookings/today
+👥 Employee Management
+
+Admin can manage employees.
+
+Endpoints:
+
+POST /api/admin/register-employee
+GET /api/admin/employees
+☁️ Cloudinary Integration
+
+Used for:
+
+Travel documents
+
+Expense receipts
+
+Referral resumes
+
+Provides:
+
+Secure cloud storage
+
+Automatic URL generation
+
+Scalable storage
+
+📚 API Documentation
+
+Swagger UI:
+
+http://localhost:8090/swagger-ui.html
+
+OpenAPI Spec:
+
+http://localhost:8090/v3/api-docs
+⚙️ Installation & Setup
+Prerequisites
+
+Java 21+
+
+Gradle
+
+SQL Server
+
+Cloudinary account
+
+Clone Repository
+git clone https://github.com/yourusername/hrms-backend.git
+cd hrms-backend
+Configure Database
+
+Create database:
+
+CREATE DATABASE HRMS_DB;
+
+Update application.properties:
+
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=HRMS_DB;encrypt=true;trustServerCertificate=true
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+
+jwt.secret=your_secret
+jwt.expiration=86400000
+
+cloudinary.cloud_name=your_cloud
+cloudinary.api_key=your_key
+cloudinary.api_secret=your_secret
+Run Application
+./gradlew bootRun
+
+Server starts at:
+
+http://localhost:8090
+📁 Project Structure
+hrms-backend/
+│
+├── controllers/
+├── services/
+├── repositories/
+├── entities/
+├── dtos/
+├── security/
+├── mappers/
+├── config/
+└── application.properties
+🛡 Security Features
+
+JWT authentication
+
+Role-based authorization
+
+Stateless architecture
+
+Secure endpoints
+
+🚧 Current Limitations
+
+No analytics dashboard
+
+No audit logging
+
+No email notification system
+
+No reporting module
+
+🚀 Future Enhancements
+
+Email notifications
+
+Expense analytics
+
+Real-time updates
+
+Admin dashboard
+
+Reporting system
+
+👨‍💻 Author
+
+Human Resource Management System Backend
+Built with Spring Boot, JWT, SQL Server, and Cloudinary

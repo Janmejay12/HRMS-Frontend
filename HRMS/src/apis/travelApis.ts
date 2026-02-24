@@ -22,6 +22,8 @@ export interface travelResponse {
   endDate: string;
   travellers: number[];
   status: Statuses;
+  createdByName: string;
+  travellerNames : string[];
 }
 
 export const travelApis = {
@@ -51,10 +53,9 @@ export const travelApis = {
     id: number,
     status: Statuses,
   ): Promise<travelResponse> => {
-    const response = await api.put<travelResponse>(
-      `/travels/${id}/status`,
-      {status : status},
-    );
+    const response = await api.put<travelResponse>(`/travels/${id}/status`, {
+      status: status,
+    });
     return response.data;
   },
 };

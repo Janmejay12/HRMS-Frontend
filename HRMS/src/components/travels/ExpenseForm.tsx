@@ -12,6 +12,7 @@ import {
 import { ExpenseCategory, ExpenseStatus, Statuses } from "../../apis/enums";
 import type { travelResponse } from "../../apis/travelApis";
 import { expenseDocumentApis } from "../../apis/expenseDocumentApis";
+import { toast } from "sonner";
 
 interface expenseFormProps {
   travel: travelResponse;
@@ -71,6 +72,7 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
           file,
         );
       }
+      toast.success("Expense created successfully")
       onCreated();
       setFormData({
         currency: "",
@@ -79,8 +81,9 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
         expenseCategory: ExpenseCategory.Accommodation,
         expenseStatus: ExpenseStatus.DRAFT,
       });
-    } catch (err) {
+    } catch (err : any) {
       setError("Failed to create expense.");
+      toast.error(err.createdExpense?.data?.message)
       console.error(err);
     } finally {
       setIsLoading(false);

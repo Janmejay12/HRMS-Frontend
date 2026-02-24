@@ -20,7 +20,9 @@ import JobsHome from "./pages/jobs/JobsHome.tsx";
 import Oraganization from "./pages/orgCharts/Oraganization.tsx";
 import GamesHome from "./pages/games/GamesHome.tsx";
 import GameSlots from "./pages/games/GameSlots.tsx";
-import MyBookings from "./pages/MyBookings.tsx";
+import MyBookings from "./pages/jobs/MyBookings.tsx";
+import CreatePost from "./components/posts/CreatePost.tsx";
+import PostsHome from "./pages/posts/PostsHome.tsx";
 
 const AppLayout = () => {
   ``;
@@ -48,10 +50,12 @@ const router = createBrowserRouter([
           { path: "/travels", element: <TravelHome /> },
           { path: "/travel-form", element: <TravelForm /> },
           { path: "/jobs", element: <JobsHome /> },
-          { path: "/orgs", element: <Oraganization /> },
+          { path: "/organization", element: <Oraganization /> },
           { path: "/games", element: <GamesHome /> },
           { path: "/games/:gameId", element: <GameSlots /> },
           { path: "/my-bookings", element: <MyBookings /> },
+          { path: "/create-post", element: <CreatePost /> },
+          { path: "/posts", element: <PostsHome/> },
         ],
       },
     ],

@@ -10,6 +10,7 @@ import {
   type travelResponse,
 } from "../../apis/travelApis";
 import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
+import { toast } from "sonner";
 
 const TravelForm: React.FC = () => {
   const [formData, setFormData] = useState<createTravelRequest>({
@@ -68,7 +69,7 @@ const TravelForm: React.FC = () => {
 
       const response = await travelApis.createTravel(formData);
       setTravelResponse(response);
-      console.log("Travel request successful:", response);
+      toast.success("Travel created successfully");
       setFormData({
         travelTitle: "",
         location: "",
@@ -79,8 +80,9 @@ const TravelForm: React.FC = () => {
         employeeIds: [],
         statusId: 1,
       });
-    } catch (err) {
+    } catch (err: any) {
       setError("Failed to fetch travel data");
+      toast.error(err.response?.data);
       console.error(err);
     } finally {
       setIsLoading(false);

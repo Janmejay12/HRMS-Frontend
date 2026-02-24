@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BookingApis, SlotBookingStatuses, type BookSlotResponse } from "../apis/bookSlotApis";
+import {
+  BookingApis,
+  SlotBookingStatuses,
+  type BookSlotResponse,
+} from "../../apis/bookSlotApis";
+import { toast } from "sonner";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState<BookSlotResponse[]>([]);
@@ -13,6 +18,11 @@ const MyBookings = () => {
 
     setBookings(data);
   };
+  // const fetchSlots = async () => {
+  //     const data = await GameApis.getAllSlots();
+  //     setSlots(data);
+  //   };
+
   const [cancelLoading, setCancelLoading] = useState<number | null>(null);
 
   const handleCancel = async (bookingId: number) => {
@@ -26,12 +36,10 @@ const MyBookings = () => {
       setCancelLoading(bookingId);
 
       await BookingApis.cancelBooking(bookingId);
-
-      alert("Booking cancelled");
-
+      toast.success("Booking cancelled");
       fetchBookings();
     } catch (e: any) {
-      alert(e.response?.data || "Cancel failed");
+      toast.error("Cancel failed");
     } finally {
       setCancelLoading(null);
     }
@@ -84,6 +92,11 @@ const MyBookings = () => {
               <p>
                 Time:
                 {booking.startTime} - {booking.endTime}
+              </p>
+
+              <p>
+                Booked By:
+                {booking.bookedById}
               </p>
             </div>
 
