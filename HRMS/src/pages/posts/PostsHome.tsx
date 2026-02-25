@@ -14,6 +14,7 @@ const PostsHome = () => {
       const data = await postApis.getAllPosts();
 
       setPosts(data);
+      console.log(data);
     } catch (err: any) {
       setError(err.response?.data || "Failed to fetch posts");
     } finally {

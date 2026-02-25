@@ -17,9 +17,10 @@ export interface PostResponse {
   postId: number;
   likesCount: number;
   title: string;
-  authorName : string;
+  authorName: string;
   content: string;
   authorId: number;
+  systemPost: boolean;
   postUrlPath: string;
   comments: CommentResponse[];
 }
@@ -82,6 +83,18 @@ export const postApis = {
   getCommentsByPostId: async (postId: number): Promise<CommentResponse[]> => {
     const response = await api.get<CommentResponse[]>(
       `/posts/${postId}/comments`,
+    );
+
+    return response.data;
+  },
+  getPostsById: async (postId: number): Promise<PostResponse> => {
+    const response = await api.get<PostResponse>(`/posts/${postId}`);
+
+    return response.data;
+  },
+  likePost: async (postId: number): Promise<string> => {
+    const response = await api.put<string>(
+      `/posts/${postId}/like`,
     );
 
     return response.data;
