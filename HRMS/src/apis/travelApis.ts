@@ -11,6 +11,15 @@ export interface createTravelRequest {
   endDate: string;
   statusId: number;
 }
+export interface updateTravelRequest {
+  travelTitle: string;
+  location: string;
+  purpose: string;
+  startDate: string;
+  maxPerDayAllowance: number;
+  employeeIds: number[];
+  endDate: string;
+}
 export interface travelResponse {
   travelId: number;
   travelTitle: string;
@@ -23,7 +32,7 @@ export interface travelResponse {
   travellers: number[];
   status: Statuses;
   createdByName: string;
-  travellerNames : string[];
+  travellerNames: string[];
 }
 
 export const travelApis = {
@@ -31,6 +40,13 @@ export const travelApis = {
     request: createTravelRequest,
   ): Promise<travelResponse> => {
     const response = await api.post<travelResponse>("/travels", request);
+    return response.data;
+  },
+  updateTravel: async (
+    request: updateTravelRequest,
+    travelId : number
+  ): Promise<travelResponse> => {
+    const response = await api.put<travelResponse>(`/travels/${travelId}`, request);
     return response.data;
   },
 

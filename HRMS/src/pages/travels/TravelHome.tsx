@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { travelApis, type travelResponse } from "../apis/travelApis";
-import TravelList from "../components/travels/TravelList";
 import { Link } from "react-router-dom";
 import { Plane } from "lucide-react";
-import { getUserRole } from "../utils/auth";
-import TravelDetailModal from "./TravelDetailModal";
 import { toast } from "sonner";
+import { travelApis, type travelResponse } from "../../apis/travelApis";
+import { getUserRole } from "../../utils/auth";
+import TravelList from "../../components/travels/TravelList";
+import TravelDetailModal from "./TravelDetailModal";
 
 const TravelHome: React.FC = () => {
   const [travelData, setTravelData] = useState<travelResponse[]>([]);
@@ -48,12 +48,11 @@ const TravelHome: React.FC = () => {
   return (
     <div>
       <div className="relative flex items-center justify-between mb-6">
-
         <div className="w-1/3">
           {role === "HR" && (
             <Link
               to="/travel-form"
-              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow"
+              className="px-4 py-2 bg-gray-600 text-gray rounded-md hover:bg-gray-700 inline-flex items-center gap-2 "
             >
               <Plane className="w-4 h-4" />
               Create Travels
@@ -61,11 +60,9 @@ const TravelHome: React.FC = () => {
           )}
         </div>
 
-
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h2 className="text-2xl font-bold text-gray-800">Your Travels</h2>
         </div>
-
 
         <div className="w-1/3 flex justify-end">
           <input

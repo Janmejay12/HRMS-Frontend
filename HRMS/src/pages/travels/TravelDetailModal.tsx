@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { travelApis, type travelResponse } from "../apis/travelApis";
-import { getUserRole } from "../utils/auth";
+import { travelApis, type travelResponse } from "../../apis/travelApis";
+import { getUserRole } from "../../utils/auth";
 import {
   travelDocumentApis,
   type TravelDocumentResponse,
-} from "../apis/travelDocumentApis";
-import { ExpenseStatus, Statuses } from "../apis/enums";
-import TravelCard from "../components/travels/TravelCard";
-import { expenseApis, type ExpenseResponse } from "../apis/expenseApis";
-import ExpenseForm from "../components/travels/ExpenseForm";
+} from "../../apis/travelDocumentApis";
+import { ExpenseStatus, Statuses } from "../../apis/enums";
+import TravelCard from "../../components/travels/TravelCard";
+import { expenseApis, type ExpenseResponse } from "../../apis/expenseApis";
+import ExpenseForm from "../../components/travels/ExpenseForm";
 import {
   expenseDocumentApis,
   type expenseDocumentResponse,
-} from "../apis/expenseDocumentApis";
+} from "../../apis/expenseDocumentApis";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 interface props {
   travel: travelResponse;
@@ -153,6 +154,12 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                   >
                     Mark Completed
                   </button>
+                  <Link
+                    className="px-4 py-2  text-gray rounded-md hover:bg-gray-200"
+                    to={`/${travel.travelId}/update-travel`}
+                  >
+                    Update Travel
+                  </Link>
                 </>
               )}
               <div />

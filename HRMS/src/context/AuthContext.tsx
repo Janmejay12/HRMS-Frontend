@@ -1,8 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getUserRole } from "../utils/auth";
 
 interface User {
-  email: string;
-  role: string;
+  role: string | null ;
 }
 interface AuthContextType {
   user: User | null;
@@ -17,16 +17,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const storedRole = getUserRole()
+    if (storedRole) {
+      setUser({role : storedRole})
+    }else{
+      setUser(null)
     }
   }, []);
-  
+
   const hasRole = (role: string) => {
-    return user?.role. role ?? false;
+    return user?.role === role;
   };
-  return <div></div>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        hasRole,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export default AuthContext;
+export const useAuth = () => useContext(AuthContext);

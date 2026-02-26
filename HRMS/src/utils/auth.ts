@@ -11,3 +11,4 @@ export const getUserRole = (): string | null => {
     return null;
   }
 };
+

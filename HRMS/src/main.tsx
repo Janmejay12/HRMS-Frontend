@@ -13,7 +13,6 @@ import {
 import Login from "./pages/Login.tsx";
 import Navbar from "./components/Navbar.tsx";
 import Index from "./pages/Index.tsx";
-import TravelHome from "./pages/TravelHome.tsx";
 import TravelForm from "./components/travels/TravelForm.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 import JobsHome from "./pages/jobs/JobsHome.tsx";
@@ -23,6 +22,11 @@ import GameSlots from "./pages/games/GameSlots.tsx";
 import MyBookings from "./pages/jobs/MyBookings.tsx";
 import CreatePost from "./components/posts/CreatePost.tsx";
 import PostsHome from "./pages/posts/PostsHome.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
+import RoleProtectedLayout from "./layouts/RoleProtectedLayout.tsx";
+import Unauthorized from "./pages/Unauthorized.tsx";
+import TravelHome from "./pages/travels/TravelHome.tsx";
+import UpdateTravelPage from "./pages/travels/UpdateTravelPage.tsx";
 
 const AppLayout = () => {
   ``;
@@ -48,14 +52,23 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Index /> },
           { path: "/travels", element: <TravelHome /> },
-          { path: "/travel-form", element: <TravelForm /> },
+          {
+            path: "/travel-form",
+            element: (
+              <RoleProtectedLayout allowedRole={"HR"}>
+                <TravelForm />
+              </RoleProtectedLayout>
+            ),
+          },
           { path: "/jobs", element: <JobsHome /> },
           { path: "/organization", element: <Oraganization /> },
           { path: "/games", element: <GamesHome /> },
           { path: "/games/:gameId", element: <GameSlots /> },
           { path: "/my-bookings", element: <MyBookings /> },
           { path: "/create-post", element: <CreatePost /> },
-          { path: "/posts", element: <PostsHome/> },
+          { path: "/posts", element: <PostsHome /> },
+          { path:"/:id/update-travel", element: <UpdateTravelPage /> },
+          { path: "/unauthorized", element: <Unauthorized /> },
         ],
       },
     ],
@@ -65,6 +78,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Toaster />
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );

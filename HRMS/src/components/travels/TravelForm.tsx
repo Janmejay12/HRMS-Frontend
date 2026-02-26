@@ -29,17 +29,14 @@ const TravelForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
-
   useEffect(() => {
     const fetchEmployees = async () => {
       var fetchedEmployees = await adminApis.getAllEmployees();
       setEmployees(fetchedEmployees);
       console.log(fetchedEmployees);
     };
-
     fetchEmployees();
   }, []);
-
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -49,24 +46,20 @@ const TravelForm: React.FC = () => {
       [name]: name === "maxPerDayAllowance" ? parseFloat(value) : value,
     }));
   };
-
   const toggleEmployee = (id: number) => {
     setFormData((prev) => {
       const exists = prev.employeeIds.includes(id);
-
       const newIds = exists
         ? prev.employeeIds.filter((empId) => empId !== id)
         : [...prev.employeeIds, id];
       return { ...prev, employeeIds: newIds };
     });
   };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
       console.log("submitting data :", formData);
-
       const response = await travelApis.createTravel(formData);
       setTravelResponse(response);
       toast.success("Travel created successfully");
@@ -101,9 +94,8 @@ const TravelForm: React.FC = () => {
         }}
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Create Travel Request
+          Create Travel                                           
         </h2>
-
         <input
           name="travelTitle"
           placeholder="Travel Title"
@@ -125,9 +117,8 @@ const TravelForm: React.FC = () => {
           required
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
-
         <label>
-          Start Date:{" "}
+          Start Date:
           <input
             type="datetime-local"
             name="startDate"
@@ -137,7 +128,7 @@ const TravelForm: React.FC = () => {
           />
         </label>
         <label>
-          End Date:{" "}
+          End Date:
           <input
             type="datetime-local"
             name="endDate"
@@ -155,13 +146,11 @@ const TravelForm: React.FC = () => {
           required
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
-
-        <label>Select Employees (Hold Ctrl/Cmd to select multiple):</label>
-
+        <label>Select Employees :</label>{" "}
         <div className="flex flex-col gap-2">
           <label className="font-semibold text-gray-700">
-            Select Travellers:
-          </label>
+            Select Travellers:{" "}
+          </label>{" "}
           <div className="border rounded-md p-3 max-h-48 overflow-y-auto bg-gray-50">
             {employees.map((emp) => (
               <label
@@ -183,11 +172,10 @@ const TravelForm: React.FC = () => {
             ))}
           </div>
           <p className="text-xs text-gray-500">
-            {formData.employeeIds.length} employees selected
+            {formData.employeeIds.length} employees selected{" "}
           </p>
         </div>
-
-        <button type="submit">Submit Request</button>
+        <button type="submit">Submit Request</button>{" "}
       </form>
     </div>
   );
