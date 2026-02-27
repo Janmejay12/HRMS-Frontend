@@ -18,10 +18,7 @@ const MyBookings = () => {
 
     setBookings(data);
   };
-  // const fetchSlots = async () => {
-  //     const data = await GameApis.getAllSlots();
-  //     setSlots(data);
-  //   };
+ 
 
   const [cancelLoading, setCancelLoading] = useState<number | null>(null);
 

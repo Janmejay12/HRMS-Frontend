@@ -44,9 +44,12 @@ export const travelApis = {
   },
   updateTravel: async (
     request: updateTravelRequest,
-    travelId : number
+    travelId: number,
   ): Promise<travelResponse> => {
-    const response = await api.put<travelResponse>(`/travels/${travelId}`, request);
+    const response = await api.put<travelResponse>(
+      `/travels/${travelId}`,
+      request,
+    );
     return response.data;
   },
 
@@ -62,6 +65,10 @@ export const travelApis = {
 
   getTravelById: async (id: number): Promise<travelResponse> => {
     const response = await api.get<travelResponse>(`/travels/${id}`);
+    return response.data;
+  },
+  deleteTravel: async (id: number): Promise<string> => {
+    const response = await api.delete<string>(`/travels/${id}`);
     return response.data;
   },
 

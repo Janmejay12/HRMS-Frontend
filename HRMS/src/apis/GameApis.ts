@@ -8,6 +8,12 @@ export interface GameResponse {
   operatingEndHours: string;
 }
 
+export interface UpdateGameRequest {
+  slotMinutes: number;
+  operatingStartHours: string;
+  operatingEndHours: string;
+}
+
 export interface GameSlotResponse {
   gameSlotId: number;
   slotNumber: number;
@@ -31,6 +37,13 @@ export const GameApis = {
     const response = await api.get<GameSlotResponse[]>(
       `/games/${id}/game-slots`,
     );
+    return response.data;
+  },
+  updateGame: async (
+    id: number,
+    data: UpdateGameRequest,
+  ): Promise<GameResponse> => {
+    const response = await api.put(`games/${id}`, data);
     return response.data;
   },
 };

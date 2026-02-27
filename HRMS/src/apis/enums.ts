@@ -46,3 +46,5 @@ export enum JobStatuses {
   HIRED = "HIRED",
   ON_HOLD = "ON_HOLD",
 }
+
+

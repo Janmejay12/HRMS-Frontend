@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
 import "./index.css";
-import App from "./App.tsx";
 import {
   createBrowserRouter,
   Navigate,
@@ -19,14 +18,14 @@ import JobsHome from "./pages/jobs/JobsHome.tsx";
 import Oraganization from "./pages/orgCharts/Oraganization.tsx";
 import GamesHome from "./pages/games/GamesHome.tsx";
 import GameSlots from "./pages/games/GameSlots.tsx";
-import MyBookings from "./pages/jobs/MyBookings.tsx";
+import MyBookings from "./pages/games/MyBookings.tsx";
 import CreatePost from "./components/posts/CreatePost.tsx";
 import PostsHome from "./pages/posts/PostsHome.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
-import RoleProtectedLayout from "./layouts/RoleProtectedLayout.tsx";
 import Unauthorized from "./pages/Unauthorized.tsx";
 import TravelHome from "./pages/travels/TravelHome.tsx";
 import UpdateTravelPage from "./pages/travels/UpdateTravelPage.tsx";
+import Profile from "./pages/posts/Profile.tsx";
 
 const AppLayout = () => {
   ``;
@@ -55,9 +54,9 @@ const router = createBrowserRouter([
           {
             path: "/travel-form",
             element: (
-              <RoleProtectedLayout allowedRole={"HR"}>
+              // <RoleProtectedLayout allowedRole={"HR"}>
                 <TravelForm />
-              </RoleProtectedLayout>
+              //</RoleProtectedLayout>
             ),
           },
           { path: "/jobs", element: <JobsHome /> },
@@ -67,7 +66,8 @@ const router = createBrowserRouter([
           { path: "/my-bookings", element: <MyBookings /> },
           { path: "/create-post", element: <CreatePost /> },
           { path: "/posts", element: <PostsHome /> },
-          { path:"/:id/update-travel", element: <UpdateTravelPage /> },
+          { path: "/profile", element: <Profile /> },
+          { path: "/:id/update-travel", element: <UpdateTravelPage /> },
           { path: "/unauthorized", element: <Unauthorized /> },
         ],
       },

@@ -14,7 +14,7 @@ import {
   type expenseDocumentResponse,
 } from "../../apis/expenseDocumentApis";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 interface props {
   travel: travelResponse;
@@ -102,6 +102,25 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
     fetchDocuments();
   };
 
+  const handleDelete = async () => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to delete this travel?",
+    );
+
+    if (!confirmCancel) return;
+
+    try {
+      const response = await travelApis.deleteTravel(travel.travelId);
+      if (response) {
+        toast.success("Travel deleted successfully.");
+        onClose();
+      }
+    } catch (e: any) {
+      toast.error("Delete Failed");
+    } finally {
+    }
+  };
+
   const isEmployee = role === "Employee";
   const isHR = role === "HR";
 
@@ -160,6 +179,12 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
                   >
                     Update Travel
                   </Link>
+                  <button
+                    onClick={handleDelete}
+                    className="px-4 py-2 bg-blue-600 text-gray rounded-md hover:bg-blue-700"
+                  >
+                    Delete Travel
+                  </button>
                 </>
               )}
               <div />

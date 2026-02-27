@@ -19,23 +19,23 @@ const TravelHome: React.FC = () => {
   const role = getUserRole();
 
   useEffect(() => {
-    const fetchTravels = async () => {
-      try {
-        if (role === "HR") {
-          await travelApis.getAllTravels().then(setTravelData);
-        } else {
-          await travelApis.getMyTravels().then(setTravelData);
-        }
-      } catch (err) {
-        setError("Failed to fetch travel data");
-        toast.error("Failed to fetch travel data");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchTravels();
   }, [role]);
 
+  const fetchTravels = async () => {
+    try {
+      if (role === "HR") {
+        await travelApis.getAllTravels().then(setTravelData);
+      } else {
+        await travelApis.getMyTravels().then(setTravelData);
+      }
+    } catch (err) {
+      setError("Failed to fetch travel data");
+      toast.error("Failed to fetch travel data");
+    } finally {
+      setLoading(false);
+    }
+  };
   const filteredTravels = useMemo(() => {
     return travelData.filter((travel) =>
       travel.travelTitle.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -81,7 +81,10 @@ const TravelHome: React.FC = () => {
       {selectedTravel && (
         <TravelDetailModal
           travel={selectedTravel}
-          onClose={() => setSelectedTravel(null)}
+          onClose={() => {
+            setSelectedTravel(null);
+            fetchTravels();
+          }}
         />
       )}
     </div>

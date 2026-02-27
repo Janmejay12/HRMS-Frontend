@@ -17,7 +17,7 @@ const Index = () => {
       description: "Book game slots and view your bookings",
       route: "/games",
       color: "bg-green-500",
-      icon: "🎮",
+      icon: "🎱",
     },
     {
       title: "Jobs",
@@ -33,6 +33,13 @@ const Index = () => {
       color: "bg-orange-500",
       icon: "🏢",
     },
+    {
+      title: "Socials",
+      description: "View Socials and posts of your company",
+      route: "/posts",
+      color: "bg-red-500",
+      icon: "♥️",
+    },
   ];
 
   return (
@@ -45,11 +52,16 @@ const Index = () => {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <Link to="/create-post" className="font-semibold">Employee</Link>
+              <Link to="/profile" className="font-semibold">
+                Employee
+              </Link>
               <p className="text-sm text-gray-500">Welcome back</p>
             </div>
 
-            <Link to="create-post" className="w-10 h-10 bg-blue-200 text-black rounded-full flex items-center justify-center font-bold-400">
+            <Link
+              to="/profile"
+              className="w-10 h-10 bg-blue-200 text-black rounded-full flex items-center justify-center font-bold-400"
+            >
               E
             </Link>
           </div>
@@ -94,7 +106,7 @@ const Index = () => {
 
         <h3 className="text-xl font-semibold mb-4">Services</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {sections.map((section) => (
             <div
               key={section.title}
