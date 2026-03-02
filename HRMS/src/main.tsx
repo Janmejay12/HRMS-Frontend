@@ -26,9 +26,10 @@ import Unauthorized from "./pages/Unauthorized.tsx";
 import TravelHome from "./pages/travels/TravelHome.tsx";
 import UpdateTravelPage from "./pages/travels/UpdateTravelPage.tsx";
 import Profile from "./pages/posts/Profile.tsx";
+import RoleProtectedLayout from "./layouts/RoleProtectedLayout.tsx";
 
 const AppLayout = () => {
-  ``;
+ 
 
   return (
     <>
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
           {
             path: "/travel-form",
             element: (
-              // <RoleProtectedLayout allowedRole={"HR"}>
+              //<RoleProtectedLayout allowedRole={"HR"}>
                 <TravelForm />
               //</RoleProtectedLayout>
             ),

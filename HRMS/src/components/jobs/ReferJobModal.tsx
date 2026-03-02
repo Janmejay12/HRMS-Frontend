@@ -143,7 +143,7 @@ const ReferJobModal: React.FC<Props> = ({ job, onClose }) => {
               {loading ? "Submitting..." : "Submit Referral"}
             </button>
             <button
-              className="w-full bg-blue-600 text-gray py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="bg-blue-600 text-gray py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
               type="button"
               onClick={onClose}
             >

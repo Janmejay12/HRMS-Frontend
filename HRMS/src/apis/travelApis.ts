@@ -20,6 +20,17 @@ export interface updateTravelRequest {
   employeeIds: number[];
   endDate: string;
 }
+
+export interface PageResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  first: boolean;
+  last: boolean;
+}
+
 export interface travelResponse {
   travelId: number;
   travelTitle: string;
@@ -53,13 +64,26 @@ export const travelApis = {
     return response.data;
   },
 
-  getAllTravels: async (): Promise<travelResponse[]> => {
-    const response = await api.get<travelResponse[]>("/travels");
+  getAllTravels: async (
+    page: number,
+    size: number,
+  ): Promise<PageResponse<travelResponse>> => {
+    const response = await api.get<PageResponse<travelResponse>>("/travels", {
+      params: { page, size },
+    });
     return response.data;
   },
 
-  getMyTravels: async (): Promise<travelResponse[]> => {
-    const response = await api.get<travelResponse[]>("/travels/my-travels");
+  getMyTravels: async (
+    page: number,
+    size: number,
+  ): Promise<PageResponse<travelResponse>> => {
+    const response = await api.get<PageResponse<travelResponse>>(
+      "/travels/my-travels",
+      {
+        params: { page, size },
+      },
+    );
     return response.data;
   },
 

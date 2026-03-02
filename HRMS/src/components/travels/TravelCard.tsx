@@ -22,7 +22,7 @@ const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick }) => {
         <span>
           {travel.startDate && new Date(travel.startDate).toDateString()}
         </span>
-        <span>{travel.endDate && new Date(travel.endDate).toDateString()}</span>
+        <span>to   {travel.endDate && new Date(travel.endDate).toDateString()}</span>
       </div>
 
       <div className="mb-3">

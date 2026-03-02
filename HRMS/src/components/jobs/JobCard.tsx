@@ -38,7 +38,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
       </div>
       <div className="text-sm text-gray-600 space-y-1">
         <p>
-          <strong>Loaction : </strong>
+          <strong>Location : </strong>
             {job.location}
         </p>
         <p>

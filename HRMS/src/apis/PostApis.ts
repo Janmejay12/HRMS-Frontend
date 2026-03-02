@@ -93,10 +93,12 @@ export const postApis = {
     return response.data;
   },
   likePost: async (postId: number): Promise<string> => {
-    const response = await api.put<string>(
-      `/posts/${postId}/like`,
-    );
+    const response = await api.put<string>(`/posts/${postId}/like`);
 
+    return response.data;
+  },
+  deletePost: async (postId: number): Promise<string> => {
+    const response = await api.delete<string>(`/posts/${postId}`);
     return response.data;
   },
 };

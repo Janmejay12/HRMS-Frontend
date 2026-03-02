@@ -2,7 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plane } from "lucide-react";
 import { toast } from "sonner";
-import { travelApis, type travelResponse } from "../../apis/travelApis";
+import {
+  travelApis,
+  type PageResponse,
+  type travelResponse,
+} from "../../apis/travelApis";
 import { getUserRole } from "../../utils/auth";
 import TravelList from "../../components/travels/TravelList";
 import TravelDetailModal from "./TravelDetailModal";
@@ -15,19 +19,28 @@ const TravelHome: React.FC = () => {
     null,
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const size = 8;
 
   const role = getUserRole();
 
   useEffect(() => {
     fetchTravels();
-  }, [role]);
+  }, [role, page]);
 
   const fetchTravels = async () => {
     try {
       if (role === "HR") {
-        await travelApis.getAllTravels().then(setTravelData);
+        const response: PageResponse<travelResponse> =
+          await travelApis.getAllTravels(page, size);
+        setTravelData(response.content);
+        setTotalPages(response.totalPages);
       } else {
-        await travelApis.getMyTravels().then(setTravelData);
+        const response: PageResponse<travelResponse> =
+          await travelApis.getMyTravels(page, size);
+        setTravelData(response.content);
+        setTotalPages(response.totalPages);
       }
     } catch (err) {
       setError("Failed to fetch travel data");
@@ -37,7 +50,7 @@ const TravelHome: React.FC = () => {
     }
   };
   const filteredTravels = useMemo(() => {
-    return travelData.filter((travel) =>
+    return travelData?.filter((travel) =>
       travel.travelTitle.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [travelData, searchTerm]);
@@ -52,7 +65,7 @@ const TravelHome: React.FC = () => {
           {role === "HR" && (
             <Link
               to="/travel-form"
-              className="px-4 py-2 bg-gray-600 text-gray rounded-md hover:bg-gray-700 inline-flex items-center gap-2 "
+              className="px-4 py-2 bg-gray-300 text-gray rounded-md hover:bg-gray-700 inline-flex items-center gap-2 "
             >
               <Plane className="w-4 h-4" />
               Create Travels
@@ -78,6 +91,7 @@ const TravelHome: React.FC = () => {
         travels={filteredTravels}
         onSelect={(travel) => setSelectedTravel(travel)}
       />
+
       {selectedTravel && (
         <TravelDetailModal
           travel={selectedTravel}
@@ -87,6 +101,29 @@ const TravelHome: React.FC = () => {
           }}
         />
       )}
+
+      {/* Pagination */}
+      <div className="flex justify-center gap-4 mt-6">
+        <button
+          disabled={page === 0}
+          onClick={() => setPage(page - 1)}
+          className="px-4 py-2 bg-gray-200 rounded"
+        >
+          Previous
+        </button>
+
+        <span>
+          Page {page + 1} of {totalPages}
+        </span>
+
+        <button
+          disabled={page === totalPages - 1}
+          onClick={() => setPage(page + 1)}
+          className="px-4 py-2 bg-gray-200 rounded"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

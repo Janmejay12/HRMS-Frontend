@@ -7,13 +7,34 @@ import CommentSection from "./CommentSection";
 
 interface Props {
   post: PostResponse;
+  fetchPosts: () => void;
 }
-const PostCard: React.FC<Props> = ({ post }) => {
+const PostCard: React.FC<Props> = ({ post, fetchPosts }) => {
   const [postData, setPostData] = useState<PostResponse>(post);
-
+  const [open, setOpen] = useState(false);
   const [liked, setLiked] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const handleDelete = async () => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to delete this post?",
+    );
+
+    if (!confirmCancel) return;
+
+    try {
+      setLoading(true);
+
+      await postApis.deletePost(postData.postId);
+
+      fetchPosts();
+    } catch (error) {
+      console.error("Delete failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLike = async () => {
     if (loading) return;
 
@@ -39,19 +60,44 @@ const PostCard: React.FC<Props> = ({ post }) => {
       {/* Author Section */}
       <div className="flex items-center gap-3 mb-3">
         {post.systemPost ? (
-          <>
-            <div className="w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
-              <strong>R</strong>
-            </div>
+          <div className="flex items-center justify-between w-full">
+            {/* Left Section */}
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
+                <strong>R</strong>
+              </div>
 
-            <div>
-              <div className="font-semibold text-gray-800">System-Post</div>
+              <div>
+                <div className="font-semibold text-gray-800">System-Post</div>
 
-              <div className="text-xs text-gray-500">
-                Automated notification
+                <div className="text-xs text-gray-500">
+                  Automated notification
+                </div>
               </div>
             </div>
-          </>
+
+            {/* Right Section */}
+             <div className="relative">
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-gray-600 hover:text-gray-800 text-xl px-2"
+            >
+              ⋮
+            </button>
+
+            {/* Dropdown */}
+            {open && (
+              <div className="absolute right-0 top-12 bg-white border rounded-md shadow-md w-36">
+                <button
+                  onClick={handleDelete}
+                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                >
+                  Delete Post
+                </button>
+              </div>
+            )}
+            </div>
+          </div>
         ) : (
           <>
             <div className="w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold">
@@ -65,6 +111,12 @@ const PostCard: React.FC<Props> = ({ post }) => {
 
               <div className="text-xs text-gray-500">Posted recently</div>
             </div>
+            <button
+              className="px-4 py-2 bg-blue-600 justify-end text-gray rounded-md hover:bg-blue-700"
+              onClick={handleDelete}
+            >
+              Delete Post
+            </button>
           </>
         )}
       </div>
