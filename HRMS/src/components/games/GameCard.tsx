@@ -15,7 +15,7 @@ const GameCard: React.FC<{ game: GameResponse }> = ({ game }) => {
   const imageSrc = gameImages[game.gameName.toLowerCase()] || chessImg;
   return (
     <div
-      className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+      className="bg-white p-4 items-center text-center rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer"
       onClick={() => navigate(`/games/${game.gameId}`)}
     >
       <img

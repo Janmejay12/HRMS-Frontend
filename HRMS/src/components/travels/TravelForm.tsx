@@ -82,7 +82,7 @@ const TravelForm: React.FC = () => {
     }
   };
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+    <div className="max-w-md mx-auto mt-10 p-6 items-center text-center bg-white rounded-lg shadow-xl">
       <form
         className="space-y-4"
         onSubmit={handleSubmit}
@@ -93,9 +93,7 @@ const TravelForm: React.FC = () => {
           maxWidth: "400px",
         }}
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Create Travel                                           
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Create Travel</h2>
         <input
           name="travelTitle"
           placeholder="Travel Title"

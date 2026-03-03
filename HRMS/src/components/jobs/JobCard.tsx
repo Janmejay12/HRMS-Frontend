@@ -27,7 +27,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
     }
   };
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border">
+    <div className="bg-white items-center text-center rounded-xl shadow-md p-6 space-y-4 border">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">{job.title}</h2>
         <span
@@ -39,7 +39,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
       <div className="text-sm text-gray-600 space-y-1">
         <p>
           <strong>Location : </strong>
-            {job.location}
+          {job.location}
         </p>
         <p>
           <strong>Employement : </strong>
@@ -68,7 +68,10 @@ const JobCard: React.FC<Props> = ({ job }) => {
         </button>
       </div>
       {isShareOpen && (
-        <ShareJobModal jobId={job.jobId} onClose={() => setIsShareOpen(false)} />
+        <ShareJobModal
+          jobId={job.jobId}
+          onClose={() => setIsShareOpen(false)}
+        />
       )}
 
       {isReferOpen && (

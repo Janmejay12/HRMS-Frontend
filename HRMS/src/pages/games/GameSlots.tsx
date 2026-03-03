@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   GameApis,
   SlotStatuses,
@@ -8,6 +8,7 @@ import {
 import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 import { BookingApis } from "../../apis/bookSlotApis";
 import { toast } from "sonner";
+import { getUserRole } from "../../utils/auth";
 
 const GameSlots = () => {
   const { gameId } = useParams();
@@ -60,10 +61,26 @@ const GameSlots = () => {
 
     return "bg-red-100 text-red-700";
   };
+  const role = getUserRole();
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Available Slots</h1>
+    <div className="p-8 items-center text-center bg-gray-50 min-h-screen">
+      <div className="grid grid-cols-3 items-center mb-6">
+        <div></div>
+
+        <h1 className="text-3xl font-bold text-center">Available Slots</h1>
+
+        {role === "HR" && (
+          <div className="flex justify-end">
+            <Link
+              to={`/${gameId}/update-game`}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            >
+              Update Game
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/* Player selection */}
 

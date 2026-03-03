@@ -41,10 +41,8 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
   const maxAllowedDate = new Date(endDate);
   maxAllowedDate.setDate(maxAllowedDate.getDate() + 10);
 
- 
   const isValidExpenseDate = now >= startDate && now <= maxAllowedDate;
-  const canUploadExpense =
-    isValidExpenseDate;
+  const canUploadExpense = isValidExpenseDate;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -72,7 +70,7 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
           file,
         );
       }
-      toast.success("Expense created successfully")
+      toast.success("Expense created successfully");
       onCreated();
       setFormData({
         currency: "",
@@ -81,9 +79,9 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
         expenseCategory: ExpenseCategory.Accommodation,
         expenseStatus: ExpenseStatus.DRAFT,
       });
-    } catch (err : any) {
+    } catch (err: any) {
       setError("Failed to create expense.");
-      toast.error(err.createdExpense?.data?.message)
+      toast.error(err.createdExpense?.data?.message);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -93,8 +91,6 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
   if (!canUploadExpense) {
     return (
       <div>
-        
-
         {!isValidExpenseDate && (
           <p>
             Expenses can only be added from the travel start date until 10 days
@@ -109,7 +105,7 @@ const ExpenseForm: React.FC<expenseFormProps> = ({ travel, onCreated }) => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="mt-6 p-6 bg-gray-50 rounded-lg shadow-md space-y-4"
+        className="mt-6 p-6 bg-gray-50 items-center text-center rounded-lg shadow-md space-y-4"
       >
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Create Expense

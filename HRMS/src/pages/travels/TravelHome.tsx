@@ -65,7 +65,7 @@ const TravelHome: React.FC = () => {
           {role === "HR" && (
             <Link
               to="/travel-form"
-              className="px-4 py-2 bg-gray-300 text-gray rounded-md hover:bg-gray-700 inline-flex items-center gap-2 "
+              className="px-4 py-2 bg-gray-300 text-gray rounded-md hover:bg-gray-400 inline-flex items-center gap-2 "
             >
               <Plane className="w-4 h-4" />
               Create Travels

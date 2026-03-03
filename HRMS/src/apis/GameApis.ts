@@ -1,7 +1,7 @@
 import { api } from "./axios";
 
 export interface GameResponse {
-  gameId: number | null;
+  gameId: number;
   gameName: string;
   slotMinutes: number;
   operatingStartHours: string;
@@ -33,6 +33,10 @@ export const GameApis = {
     const response = await api.get<GameResponse[]>("/games");
     return response.data;
   },
+  getGameById: async (id : number): Promise<GameResponse> => {
+    const response = await api.get<GameResponse>(`/games/${id}`);
+    return response.data;
+  },
   getAllSlots: async (id: number): Promise<GameSlotResponse[]> => {
     const response = await api.get<GameSlotResponse[]>(
       `/games/${id}/game-slots`,
@@ -43,7 +47,7 @@ export const GameApis = {
     id: number,
     data: UpdateGameRequest,
   ): Promise<GameResponse> => {
-    const response = await api.put(`games/${id}`, data);
+    const response = await api.put(`/games/${id}`, data);
     return response.data;
   },
 };

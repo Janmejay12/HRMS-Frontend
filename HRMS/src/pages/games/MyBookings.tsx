@@ -18,7 +18,6 @@ const MyBookings = () => {
 
     setBookings(data);
   };
- 
 
   const [cancelLoading, setCancelLoading] = useState<number | null>(null);
 
@@ -58,7 +57,7 @@ const MyBookings = () => {
     }
   };
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 items-center text-center bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
 
       {bookings.length === 0 && <p>No bookings found</p>}

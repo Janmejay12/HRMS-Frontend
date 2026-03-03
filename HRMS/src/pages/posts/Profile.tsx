@@ -65,7 +65,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen items-center text-center bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
         {/* Header */}
         <div className="flex items-center gap-6 border-b pb-6">
@@ -110,7 +110,7 @@ const Profile = () => {
         <br />
         <div className="max-w-xl mx-auto space-y-5">
           {posts.map((post) => (
-            <PostCard key={post.postId} post={post} />
+            <PostCard fetchPosts={fetchPosts} key={post.postId} post={post} />
           ))}
         </div>
       </div>

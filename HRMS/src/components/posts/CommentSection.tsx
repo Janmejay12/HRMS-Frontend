@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { postApis, type CommentResponse, type PostResponse } from "../../apis/PostApis";
+import {
+  postApis,
+  type CommentResponse,
+  type PostResponse,
+} from "../../apis/PostApis";
 import CommentItem from "./CommentItem";
+
 interface Props {
   post: PostResponse;
 }
@@ -45,13 +50,15 @@ const CommentSection: React.FC<Props> = ({ post }) => {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 items-center text-center">
       {/* Toggle */}
       <button
         onClick={handleToggle}
         className="text-sm text-gray-600 hover:text-blue-600 mb-2"
       >
-        {showComments ? "Hide comments" : `View comments (${post.comments.length})`}
+        {showComments
+          ? "Hide comments"
+          : `View comments (${post.comments.length})`}
       </button>
 
       {showComments && (

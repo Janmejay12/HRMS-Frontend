@@ -43,7 +43,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 items-center text-center">
       {/* Header */}
 
       <header className="bg-white shadow-md">
@@ -115,7 +115,7 @@ const Index = () => {
             >
               <div className={`${section.color} h-2 rounded-t-xl`} />
 
-              <div className="p-6">
+              <div className="p-6 items-center text-center">
                 <div className="text-3xl mb-3">{section.icon}</div>
 
                 <h4 className="text-lg font-semibold mb-2">{section.title}</h4>

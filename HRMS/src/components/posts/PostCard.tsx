@@ -56,7 +56,7 @@ const PostCard: React.FC<Props> = ({ post, fetchPosts }) => {
     }
   };
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition p-5">
+    <div className="bg-white items-center text-center rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition p-5">
       {/* Author Section */}
       <div className="flex items-center gap-3 mb-3">
         {post.systemPost ? (
@@ -77,25 +77,25 @@ const PostCard: React.FC<Props> = ({ post, fetchPosts }) => {
             </div>
 
             {/* Right Section */}
-             <div className="relative">
-            <button
-              onClick={() => setOpen(!open)}
-              className="text-gray-600 hover:text-gray-800 text-xl px-2"
-            >
-              ⋮
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setOpen(!open)}
+                className="text-gray-600 hover:text-gray-800 text-xl px-2"
+              >
+                ⋮
+              </button>
 
-            {/* Dropdown */}
-            {open && (
-              <div className="absolute right-0 top-12 bg-white border rounded-md shadow-md w-36">
-                <button
-                  onClick={handleDelete}
-                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
-                >
-                  Delete Post
-                </button>
-              </div>
-            )}
+              {/* Dropdown */}
+              {open && (
+                <div className="absolute right-0 top-12 bg-white border rounded-md shadow-md w-36">
+                  <button
+                    onClick={handleDelete}
+                    className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                  >
+                    Delete Post
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ) : (

@@ -31,7 +31,7 @@ const JobsHome = () => {
 
   return (
     <div>
-      <div className="p-8 space-y-6">
+      <div className="p-8 items-center text-center space-y-6">
         <h1 className="text-2xl font-bold">Open positions</h1>
         {jobs.length === 0 ? (
           <p className="text-gray-500">No jobs available</p>

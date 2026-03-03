@@ -35,7 +35,7 @@ const PostsHome = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6">
+    <div className=" items-center min-h-screen bg-gray-100 py-6">
       <div className="max-w-xl mx-auto space-y-5">
         {posts.map((post) => (
           <PostCard key={post.postId} post={post} fetchPosts={fetchPosts} />

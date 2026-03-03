@@ -14,7 +14,7 @@ import {
   type expenseDocumentResponse,
 } from "../../apis/expenseDocumentApis";
 import { toast } from "sonner";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface props {
   travel: travelResponse;
@@ -137,7 +137,7 @@ const TravelDetailModal: React.FC<props> = ({ travel, onClose }) => {
 
   return (
     <div>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+      <div className="items-center text-center fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
         <div className="bg-white w-full max-w-5xl rounded-2xl shadow-2xl p-8 relative max-h-[90vh] overflow-y-auto space-y-8">
           <button
             onClick={onClose}

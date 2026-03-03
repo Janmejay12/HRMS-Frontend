@@ -17,7 +17,7 @@ const GamesHome = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 items-center text-center bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-gray-900">Available Games</h1>
       <button
         onClick={() => navigate("/my-bookings")}
@@ -25,6 +25,7 @@ const GamesHome = () => {
       >
         My Bookings
       </button>
+      <br /><br />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {games.map((game) => (
           <GameCard key={game.gameId} game={game} />

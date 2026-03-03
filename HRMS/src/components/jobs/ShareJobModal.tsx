@@ -43,7 +43,7 @@ const ShareJobModal: React.FC<Props> = ({ jobId, onClose }) => {
       }
       setEmails("");
       setTimeout(() => onClose(), 1200);
-    } catch (err:any) {
+    } catch (err: any) {
       setError((err as Error).message);
       toast.error(err.response?.data?.message);
     } finally {
@@ -51,7 +51,7 @@ const ShareJobModal: React.FC<Props> = ({ jobId, onClose }) => {
     }
   };
   return (
-    <div className="fixed inset-0 bg-whitw bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed items-center text-center inset-0 bg-whitw bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
         <h2 className="text-xl font-semibold mb-4">Share Job</h2>
         <form onSubmit={handleSubmit}>
@@ -66,12 +66,21 @@ const ShareJobModal: React.FC<Props> = ({ jobId, onClose }) => {
           />
           {error && <p className="error">{error}</p>}
           {success && <p className="success">Job shared successfully!</p>}
-          <div className="actions">
-            <button type="button" onClick={onClose} disabled={loading}>
-              Cancel
+          <div className="flex justify-end gap-3 mt-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 transition"
+            >
+              {loading ? "Sharing..." : "Share Job"}
             </button>
-            <button type="submit" disabled={loading}>
-              {loading ? "Sharing..." : "Share"}
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+            >
+              Cancel
             </button>
           </div>
         </form>

@@ -9,7 +9,7 @@ interface TravelCardProps {
 }
 const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick }) => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+    <div className="max-w-md mx-auto items-center text-center bg-white shadow-lg rounded-lg p-6 border border-gray-200">
       <h3 className="text-2xl font-bold text-gray-800 mb-2">
         {travel.travelTitle}
       </h3>
@@ -22,7 +22,9 @@ const TravelCard: React.FC<TravelCardProps> = ({ travel, onClick }) => {
         <span>
           {travel.startDate && new Date(travel.startDate).toDateString()}
         </span>
-        <span>to   {travel.endDate && new Date(travel.endDate).toDateString()}</span>
+        <span>
+          to {travel.endDate && new Date(travel.endDate).toDateString()}
+        </span>
       </div>
 
       <div className="mb-3">
