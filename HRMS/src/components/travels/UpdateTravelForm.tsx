@@ -9,9 +9,9 @@ import {
   type travelResponse,
   type updateTravelRequest,
 } from "../../apis/travelApis";
-import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
 
 const UpdateTravelForm: React.FC<{
   travel: travelResponse;
@@ -27,16 +27,7 @@ const UpdateTravelForm: React.FC<{
   });
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
-
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      var fetchedEmployees = await adminApis.getAllEmployees();
-      setEmployees(fetchedEmployees);
-      console.log(fetchedEmployees);
-    };
-    fetchEmployees();
-  }, []);
+ const employees = useAppSelector(state => state.emloyees.employees);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

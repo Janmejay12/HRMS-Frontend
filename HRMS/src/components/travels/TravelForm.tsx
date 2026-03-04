@@ -9,8 +9,8 @@ import {
   type createTravelRequest,
   type travelResponse,
 } from "../../apis/travelApis";
-import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 import { toast } from "sonner";
+import { useAppSelector } from "../../store/hooks";
 
 const TravelForm: React.FC = () => {
   const [formData, setFormData] = useState<createTravelRequest>({
@@ -28,15 +28,9 @@ const TravelForm: React.FC = () => {
   );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      var fetchedEmployees = await adminApis.getAllEmployees();
-      setEmployees(fetchedEmployees);
-      console.log(fetchedEmployees);
-    };
-    fetchEmployees();
-  }, []);
+  const employees = useAppSelector(state => state.emloyees.employees);
+
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -46,6 +40,7 @@ const TravelForm: React.FC = () => {
       [name]: name === "maxPerDayAllowance" ? parseFloat(value) : value,
     }));
   };
+  
   const toggleEmployee = (id: number) => {
     setFormData((prev) => {
       const exists = prev.employeeIds.includes(id);
@@ -55,6 +50,7 @@ const TravelForm: React.FC = () => {
       return { ...prev, employeeIds: newIds };
     });
   };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);

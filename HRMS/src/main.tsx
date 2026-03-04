@@ -28,6 +28,8 @@ import UpdateTravelPage from "./pages/travels/UpdateTravelPage.tsx";
 import Profile from "./pages/posts/Profile.tsx";
 import RoleProtectedLayout from "./layouts/RoleProtectedLayout.tsx";
 import UpdateGameForm from "./components/games/UpdateGameForm.tsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.ts";
 
 const AppLayout = () => {
   return (
@@ -79,8 +81,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Toaster />
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </Provider>
   </StrictMode>,
 );

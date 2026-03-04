@@ -5,21 +5,19 @@ import {
   SlotStatuses,
   type GameSlotResponse,
 } from "../../apis/GameApis";
-import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
 import { BookingApis } from "../../apis/bookSlotApis";
 import { toast } from "sonner";
 import { getUserRole } from "../../utils/auth";
+import { useAppSelector } from "../../store/hooks";
 
 const GameSlots = () => {
   const { gameId } = useParams();
   const [slots, setSlots] = useState<GameSlotResponse[]>([]);
   const [selectedPlayers, setSelectedPlayers] = useState<number[]>([]);
   const [bookingLoading, setBookingLoading] = useState<number | null>(null);
-  const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
 
   useEffect(() => {
     fetchSlots();
-    fetchEmployees();
   }, [gameId]);
 
   const fetchSlots = async () => {
@@ -27,10 +25,7 @@ const GameSlots = () => {
     setSlots(data);
   };
 
-  const fetchEmployees = async () => {
-    const data = await adminApis.getAllEmployees();
-    setEmployees(data);
-  };
+   const employees = useAppSelector(state => state.emloyees.employees);
 
   const handlePlayerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const options = Array.from(e.target.selectedOptions);

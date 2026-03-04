@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../store/hooks";
+import { adminApis } from "../apis/AdminApis";
+import { setEmployees, setLoading } from "../slices/employeeSlice";
 
 const Index = () => {
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      dispatch(setLoading(true));
+
+      const employees = await adminApis.getAllEmployees();
+
+      dispatch(setEmployees(employees));
+
+      dispatch(setLoading(false));
+    };
+
+    fetchEmployees();
+  }, []);
+  
   const sections = [
     {
       title: "Travels",

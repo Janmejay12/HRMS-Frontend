@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { adminApis, type EmployeeResponse } from "../../apis/AdminApis";
+import {type EmployeeResponse } from "../../apis/AdminApis";
 import {
   buildOrgChartData,
   OrgChartApis,
@@ -7,9 +7,9 @@ import {
 } from "../../apis/OrgChartApis";
 import OrgChartComponent from "../../components/orgCharts/OrgChartComponent";
 import { toast } from "sonner";
+import { useAppSelector } from "../../store/hooks";
 
 const Oraganization = () => {
-  const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEmployee, setSelectedEmployee] =
     useState<EmployeeResponse | null>(null);
@@ -17,14 +17,8 @@ const Oraganization = () => {
   const [orgChartNodes, setOrgChartNodes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
-
-  const fetchEmployees = async () => {
-    var fetchedEmployees = await adminApis.getAllEmployees();
-    setEmployees(fetchedEmployees);
-  };
+  
+ const employees = useAppSelector(state => state.emloyees.employees);
 
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp) =>
