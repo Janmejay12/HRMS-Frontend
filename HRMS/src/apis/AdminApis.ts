@@ -28,4 +28,5 @@ export const adminApis = {
     );
     return response.data;
   },
+ 
 };

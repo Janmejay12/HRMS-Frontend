@@ -2,14 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
 import "./index.css";
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
-import Login from "./pages/Login.tsx";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar.tsx";
 import Index from "./pages/Index.tsx";
 import TravelForm from "./components/travels/TravelForm.tsx";
@@ -26,10 +19,12 @@ import Unauthorized from "./pages/Unauthorized.tsx";
 import TravelHome from "./pages/travels/TravelHome.tsx";
 import UpdateTravelPage from "./pages/travels/UpdateTravelPage.tsx";
 import Profile from "./pages/posts/Profile.tsx";
-import RoleProtectedLayout from "./layouts/RoleProtectedLayout.tsx";
 import UpdateGameForm from "./components/games/UpdateGameForm.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
+import Login from "./pages/auth/Login.tsx";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage.tsx";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage.tsx";
 
 const AppLayout = () => {
   return (
@@ -44,6 +39,8 @@ const AppLayout = () => {
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
   {
     element: <ProtectedLayout />,
     children: [

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { authApis, type LoginRequest } from "../apis/authApis";
+import { authApis, type LoginRequest } from "../../apis/authApis";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -10,16 +10,16 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      if (location.key !== "default") {
-        navigate(-1);
-      } else {
-        navigate("/");
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     if (location.key !== "default") {
+  //       navigate(-1);
+  //     } else {
+  //       navigate("/");
+  //     }
+  //   }
+  // }, []);
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -87,6 +87,14 @@ const Login: React.FC = () => {
               disabled={isLoading}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-quizrush-purple focus:border-quizrush-purple disabled:bg-gray-100 disabled:cursor-not-allowed"
             />
+            <div className="flex justify-end">
+              <Link
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition"
+                to="/forgot-password"
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </div>
 
           <button

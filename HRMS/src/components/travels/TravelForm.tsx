@@ -40,7 +40,7 @@ const TravelForm: React.FC = () => {
       [name]: name === "maxPerDayAllowance" ? parseFloat(value) : value,
     }));
   };
-  
+
   const toggleEmployee = (id: number) => {
     setFormData((prev) => {
       const exists = prev.employeeIds.includes(id);
@@ -143,8 +143,8 @@ const TravelForm: React.FC = () => {
         <label>Select Employees :</label>{" "}
         <div className="flex flex-col gap-2">
           <label className="font-semibold text-gray-700">
-            Select Travellers:{" "}
-          </label>{" "}
+            Select Travellers:
+          </label>
           <div className="border rounded-md p-3 max-h-48 overflow-y-auto bg-gray-50">
             {employees.map((emp) => (
               <label
@@ -166,10 +166,10 @@ const TravelForm: React.FC = () => {
             ))}
           </div>
           <p className="text-xs text-gray-500">
-            {formData.employeeIds.length} employees selected{" "}
+            {formData.employeeIds.length} employees selected
           </p>
         </div>
-        <button type="submit">Submit Request</button>{" "}
+        <button type="submit">Submit Request</button>
       </form>
     </div>
   );
