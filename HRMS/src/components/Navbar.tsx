@@ -11,23 +11,25 @@ import {
   User,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { api } from "../apis/axios";
 
 const Navbar = () => {
-
-  const handleLogout = () => {
+  const handleLogout = async  () => {
+    await api.post("/auth/logout");
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
-  
+
   return (
     <div>
       <nav className="bg-gray-700 p-4 shadow-lg rounded">
         <div className="container mx-auto flex justify-between items-center">
-          <Link to="/" className="text-white text-2xl font-bold">ROIMA HRMS</Link>
+          <Link to="/" className="text-white text-2xl font-bold">
+            ROIMA HRMS
+          </Link>
 
           {/* Navigation Links and Buttons Section */}
           <div className="flex items-center space-x-6">
-            
             <Link
               to="/"
               className="text-gray-300 hover:text-white transition duration-300 flex items-center space-x-2"
@@ -43,7 +45,7 @@ const Navbar = () => {
               <Plane className="w-4 h-4" />
               <span>Travels</span>
             </Link>
-           
+
             <Link
               to="/posts"
               className="text-gray-300 hover:text-white transition duration-300 flex items-center space-x-2"
