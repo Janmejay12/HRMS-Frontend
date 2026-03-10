@@ -21,11 +21,11 @@ api.interceptors.response.use(
   (response) => response,
 
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config as any;
 
     if (
       error.response &&
-      error.response.status === 401 &&
+      error.response?.status === 401 &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
@@ -49,15 +49,12 @@ api.interceptors.response.use(
 );
 
 const refreshAccessToken = async () => {
-  const response = await axios.post(
-    "http://localhost:8090/api/refresh",
-    {},
-    { withCredentials: true },
-  );
+  const response = await api.post("/refresh");
 
-  const { accessToken } = response.data;
+  const { token } = response.data;
 
-  localStorage.setItem("token", accessToken);
+  localStorage.setItem("token", token);
 
-  return accessToken;
+  return token;
 };
+Raj3-Janmejay8-12345

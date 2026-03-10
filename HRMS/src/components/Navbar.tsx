@@ -1,21 +1,18 @@
 import {
   Briefcase,
   BriefcaseBusiness,
-  Crown,
   Home,
   Joystick,
   LogOut,
   Plane,
-  Settings,
   Share2,
-  User,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../apis/axios";
 
 const Navbar = () => {
   const handleLogout = async  () => {
-    await api.post("/auth/logout");
+    await api.delete("/auth/logout");
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
